@@ -1,0 +1,475 @@
+#+TITLE: CSC373, Fall 2017
+#+AUTHOR: Anthony Tam
+#+OPTIONS: toc:nil num:nil
+#+LATEX_HEADER: \usepackage[margin=.75in]{geometry}
+
+* Lecture One
+** Administrative
+   - Vincent Maccio
+   - vincent.maccio@utoronto.ca
+   - vincentmaccio.com
+   - Office Hours
+     - DH3015
+     - 11:00 to 12:00
+     - 1:00 to 2:00
+   - Email subject
+     - CSC373 - {Your Name}
+** Introduction to Big Oh
+   - f(n) = O(g(n))
+     - g(n) bounds f(n) from above by some constant factor... evantually.
+     - Formally, f(n) = O(g(n)) \leftrightarrow \exists{}c, n_o:\forall n\gt{}n_o, f(n)\le{}cg(n)
+   - Prove 20n^2+4n-8 = O(n^2)
+     - find c, n_o, f(n) \le cg(n) \forall n>n_o
+     - c = 24, n_o = 1
+     - f(n) \le 20n^2 + 4n^2 for n>1
+     - f(n) \le 24n^2 \le 24g(n)
+   - Prove n^3 \ne O(n^2)
+     - Assume: n^3 \le cn^2, \forall{}n>n_o
+     - \forall n > 1, n^3 \le 10000n^2, n>c, n^3>cn^2 consider n>c
+   - Prove or Disprove: 2^2n = O(2^n + n^2)
+     - If g(n)=O(g'(n)) and f(n)\ne{}O(g'(n)) then, f(n)\ne{}O(g(n))
+     - Let g'(n)=2^n, g(n)=2^n+n^2, can we show g(n)=O(g'(n)), then 2^2n \ne O(2^n)
+     - 2^n + n^2 = O(n^n)
+     - n_o \ge 4, 2^n+n^2 \ge 22^n = O(2^n)
+     - f(n)\ne{}O(g(n)) \leftarrow \forall{}c, \exists{}n': \forall{}n>n': f(n)>cg(n)
+     - 2^2n \ne O(2^n).... 2^2n = 2^n \cdot 2^n.... 2^n \cdot 2^n \le c2^n \rightarrow 2^n \le c
+     - let n+1=log_2(c) \therefore{}Contradiction, QED.
+   - If f_1(n) = O(g_1(n)) and f_2(n) = O(g_2(n)), prove max(f_1(n), f_2(n)) = O(max(g_1(n), g_2(n)))
+     - let c_1, n_o1 be valid values to prove f_1(n) = O(g_1(n))
+     - let c_2, n_o2 be valid values to prove f_2(n) = O(g_2(n))
+     - let c=max(c_1, c_2) and n_o=max(n_o1, n_o2)
+     - n'\ge{}n_o, consider the case where f_1(n') \ge f_2(n')
+       - f_1(n') \le c_1 g_1(n') \le max(c_1, c_2)max(g_1(n'), g_2(n'))
+     - Prove the other directional by repeating the above step 
+* Lecture Two
+** Greedy
+   - What's good now (local) vs what's good later (global)
+   - Define some rule/metric/heuristic
+   - Do what's best for that rule
+*** Advantages
+    - Easy to think of
+    - Easy to implement
+*** Disadvantages
+    - Proving it's optimal vs suboptimal
+*** Knapsack Problem
+    - You're given a set of items, S, and a maximum capacity C
+    - s \in{} S has an assosiated weight and calue (W_s, V_s)
+    - max total value S'\subset{} S, such total weight of S' is \le C
+**** Solutions
+     - Brute Force: O(2^n)
+     - Take highest value
+     - Lowest Weight
+     - Highest value per weight
+     - *There is no polynomial solution for this*
+*** Scheduling Jobs
+    - Given a set of jobs (n of them)
+    - Each job, i, has a start time, s(i), and a finish time, f(i)
+    - Schedule the maximum # of jobs which don't conflict
+**** Solutions
+     - Brute Force: O(2^n)
+     - Take the shortest job
+     - Take the earliest start time
+     - Take the earliest finish time
+       - Assume A* is an optimal solution
+       - Assume A^G is the schedule returned by the earliest finish time algorithm (EFT)
+       - Let A*i: i_1, ..., i_m A^G: j_1, ..., j_k
+       - We need to show k=m 
+         - f(i_{r - 1}) \le f(i_r)
+         - f(j_{r - 1}) \le f(j_r)
+       - Lemma: \forall{}r\le{}k, f(j_r) \le f(i_r)
+         - Prove via induction
+           - Need to show f(j_i) \le f(i_i), from EFT f(j) \le f(i) \forall i \rightarrow f(j_i) \le f(i_i)
+           - Assume f(j_{r - 1}) \le f(i_{r - 1})
+           - Show f(j_r) \le f(i_r), relate f(i_{r - 1}) to s(i_r)
+             - f(i_{r - 1}) \le s(i_r), jobs don't conflict
+             - Case 1: A^G chooses the same job as A* (at the r^th index)
+               - For free we know f(j_r) \le f(i_r)
+             - Case 2: A^G chooses a different job, from the greedy rule
+               - f(j_r) \le f(i_r)
+       - Assume A^G is not optimal, m \gt k
+         - \therefore in A* there is a job which starts after i_k \rightarrow s(i_{k+1}) \ge f(i_k) \ge f(j_k)
+           - Contradiction, A^G would have at least choosen i_{k + 1}
+           - \therefore A^G is optimal
+       - "Stays Ahead" proof
+        #+BEGIN_SRC python
+          def Schedule(J):
+             #Sort J bu finish time
+             S = { }
+             s = S + J[1]
+             last_added = J[1]
+             for i=2 to n:
+                if J[i].start_time > last_added.finish_time:
+                   S = S + J[i]
+                   last_added = J[i]
+             return S
+        #+END_SRC
+     - Job with the least conflicts
+     - Job with the most conflicts
+* Lecture Three
+** Greedy
+  - Single Source Shortest
+*** What is a graph?
+    - G=(V, E)
+      - V is the set of verticies
+      - E is the set of edges
+      - E \subset VxV e=(u, v)
+      - |E| \le |V|^2
+      - weight function w(), w(e) \triangleq the wright of edge e
+*** MST, what is it? G=(V, E)
+    - It's a connected graph (V, T)
+    - The weight of all edges is minimized
+    - min \sum_{e\in{}t} w(e), |T|=n - 1, n=|V|
+**** Kruscals
+     #+BEGIN_SRC python
+       def kruscals(V, E):
+           #Sort E by nondecending order by w(e)
+           T = {}
+           for i in range (1, |E|):
+               (e, v) = e[i]
+               if u is not connected to v in T:
+                   T = T + {e[i]}
+     #+END_SRC
+     - T^K: is the spanning tree returned by Kruscal's algorithm
+     - T*: is the minimum spanning tree
+     - T^K_1: T^K after the i^th iteration of Kruscal's
+     - Show \forall i, \exists a MST which agrees with T_i, for frst i choices
+       - Base Case: i=0, T^K_i = {}
+       - Assume exists an MST T^* that agrees with T^K_{i-1}
+       - Show this for i
+         - Consider the edge e_i
+           | Case | T_i^k   | T^*     | Is Trivial? |
+           |---+---------+---------+-------------|
+           | 1 | exclude | exclude | Yes         |
+           | 2 | exclude | include | No          |
+           | 3 | include | exclude | No          |
+           | 4 | include | include | Yes         |
+         - Looking more into case 2 (Kruscal excluded, OPT included)
+           - If T^* includes e_i, it creates a cycle
+             - However, MSTs don't have cycles, \Rightarrow\Leftarrow
+         - Case 3 (Kruscal included, OPT excluded)
+           - let e_i=(v, u)
+           - At this point, u and v are not connected
+             - There must be an edge e_j that will connect u and v (potentially be indirectly) 
+             - If we can show e(e_{max})\le{}w(e_i), w(e_{max})\ge{}w(e_j)\ge{}w(e_i)
+             - Remove e_j, new T' has total weight \le w(T^*), but ut includeds e_i
+     #+BEGIN_SRC dot :file kruscals.png :cmdline -Kdot -Tpng
+       digraph {
+           1 -> 2 [ label = "7" ];
+           1 -> 3 [ label = "2" ];
+           2 -> 4 [ label = "6" ];
+           3 -> 4 [ label = "5" ];
+           4 -> 5 [ label = "10" ];
+       }
+     #+END_SRC
+
+     #+RESULTS:
+     [[file:kruscals.png]]
+*** Dijkstra's Algorithm
+    - Single source
+    - All edge weights are positive
+    #+BEGIN_SRC python
+      def Dijkstra(V, E):
+        S = {} #Set of visited verticies
+        for v in V:
+          d[v] = 999 #Some large number
+        d[source] = 0
+        while v not in x:
+          v = non_visited_vertex with the smallest d[v]
+          for all edges:
+            if u is not in s and d[v] + w(v, u) < d[u]:
+              d[u] = d[v] + w(u, v)
+          S = S + {v}
+    #+END_SRC
+
+    #+BEGIN_SRC dot :file dijkstra.png :cmdline -Kdot -Tpng
+      digraph {
+          A -> B [ label = "6" ];
+          A -> D [ label = "1" ];
+          B -> D [ label = "2" ];
+          D -> E [ label = "1" ];
+          B -> E [ label = "2" ];
+          B -> C [ label = "5" ];
+          E -> C [ label = "5" ];
+      }
+    #+END_SRC
+
+    #+RESULTS:
+    [[file:dijkstra.png]]
+    | Vertex | d[v]        | Pred           | Visited |
+    |--------+-------------+----------------+---------|
+    | A      | 0           | None           | Yes (1) |
+    | B      | \infin -> 6 -> 3 | None -> A -> D | Yes (4) |
+    | C      | \infin -> 7      | None -> E      | Yes (5) |
+    | D      | \infin -> 1      | None -> A      | Yes (2) |
+    | E      | \infin -> 2      | None -> D      | Yes (3) |
+    - What do we need from the algo? All in O(log(n))
+      - getMin()
+      - updateKey(v, n)
+      - deleteMin()
+    - Show when you visit d[u], d[u] is the shortest distance in all visited nodes
+      - d[y] \le d[u] cannot be shorter but getting a node which is outside the currently viisted nodes
+* Lecture Four
+** Dynamic Programming
+   1. Define the overall problem as a set of subproblems
+   2. Relate these subproblems to eachother
+   3. Solve ans SAVE subproblems
+      - Easier to understand
+      - Decreases complexity
+*** Longest Common Subsequence
+    - Given 2 strings X and Y a common subsequence is a string of characters s such that the order of the characters in s appear in X and Y in the same order
+      - X = xxadbxxxc, Y = abyydyc, substring = "ab", subsequence = "abc" or "adc"
+    - If X is length n, how many subsequences does it contain
+      - 2^n, resulting in O(2^{n + m}) where n = len(X) and m = len(Y)
+    - LCS(X_i, Y_j) \Rightarrow the largest common subsequence of X[:i] and Y[:j]
+      - This will lead to LCS(X_n, Y_m), the entire problem
+      \[ \begin{cases} 
+        1 + LCS(X_{i - 1}) & X[i] = Y[j]\\
+        max(LCS(X_i, Y_{j - 1}), LCS(X_{i - 1}, Y_j)) & X[i] \ne Y[j]
+        \end{cases}
+      \]
+   #+BEGIN_SRC python
+     def LCS(X, Y):
+       n = len(X)
+       m = len(Y)
+       SP = int[n, m]
+       for i in range (1, n):
+           for j in range (1, m):
+             if X[i] == Y[j]:
+               SP[i][j] = SP[i-1][j-1] + 1
+             else:
+               SP[i][j] = max(SP[i-1][j], SP[i][j-1])
+       return SP[n][m]
+   #+END_SRC
+**** Example
+     - X = "AGGTAB", Y = "GTUAYB"
+     | $\frac{Y}{X}$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+     |---------------+---+---+---+---+---+---+---|
+     |             0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+     |             1 | 0 | 0 | 0 | 0 | 1 | 1 | 1 |
+     |             2 | 0 | 1 | 1 | 1 | 1 | 1 | 1 |
+     |             3 | 0 | 1 | 1 | 1 | 1 | 1 | 1 |
+     |             4 | 0 | 1 | 2 | 2 | 2 | 2 | 2 |
+     |             5 | 0 | 1 | 2 | 3 | 3 | 3 | 3 |
+     |             6 | 0 | 1 | 2 | 2 | 3 | 3 | 4 |
+     
+*** Knapsack Problem
+    - Assume the capacity, all weights, and all values are all ints
+    - Subproblem: K(i, c) \triangleq optimal value when using only the first i items with capacity c
+    - Base case: k(0, c) = 0 and k(i, 0) = 0
+      \[ \begin{cases} 
+        K(i - 1, c) & c < w_i\\
+        max(K(i - 1, c - w_i) + v_i, K(i -1, c)) & c \ge w_i
+        \end{cases}
+      \]
+      - Note, case 2 is the max of including or excluding
+**** Example
+     - C = 10
+     | Item | Weight | Value |
+     |------+--------+-------|
+     |    1 |      1 |     2 |
+     |    2 |      2 |     3 |
+     |    3 |      6 |     6 |
+     |    4 |      8 |     9 |
+     - After running:
+     | $\frac{C}{Items} | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |  9 | 10 |
+     |------------------+---+---+---+---+---+---+---+---+---+----+----|
+     |                0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |  0 |  0 |
+     |                1 | 0 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |  2 |  2 |
+     |                2 | 0 | 2 | 3 | 5 | 5 | 5 | 5 | 5 | 5 |  5 |  5 |
+     |                3 | 0 | 2 | 3 | 5 | 5 | 5 | 6 | 8 | 9 | 11 | 11 |
+     |                4 | 0 | 2 | 3 | 5 | 5 | 5 | 6 | 8 | 9 | 11 | 12 |
+     - O(nc), psudo-polynomial
+* Lecture Five
+** Midterm
+   - Next week, Oct 23^{rd}
+   - 11:00am - 1:00pm
+** Shortest Path
+*** Dijkstra's Algorithm
+    - Source S, find \forall{}v sp(s, v)
+      - O(V^2 log V) (priority heap)
+      - O(E r V log C) (fib heap)
+    - What about \forall{}u,v sp(u, v)
+      - O(EV + V^2 log V)
+    - Run Dijkstra from every node
+      - V - 1 \le E \le V^2
+      - E = \theta(V^2) \Rightarrow G is dence
+        - O(V^3)
+      - E = \theta(V) \Rightarrow G is sparse
+        - O(V^2 log V)
+    - No negative weights
+*** Bellman-Ford
+    - Single Source
+    - Allows negative weights
+    - Worse case runtime: O(V^3)
+      - For all pairs shortest path: O(V^4)
+*** Floyd-Warshall
+    - Dynamic programming
+    - All pairs
+    - Define the sub problems
+      - We want SP(i, j)
+      - SP(i, j, k) \triangleq the shortest path from i to j when I have access to the first k nodes, plus i and j
+      - SP(i, j) = SP(i, j, n) where n = |V|
+      - SP(i, j, k) = SP(i, j, k - 1) if the shortest path between i and k given access to the first k nodes doesn't include node k
+      - SP(i, j, k) = SP(i, j, k) + SP(k, j, k) if the k^th node is used
+        - SP(i, j, k) = min(SP(i, j, k-1), SP(i, k, k - 1) + SP(k, j, k - 1)) is a simplified problem which suits DP
+      - SP(i, i, 0) = 0
+      \[
+        SP(i, j, 0) = \begin{cases} 
+          w(i, j) & (i, j)\in{}E \\
+          \infin \\
+        \end{cases}
+      \]
+      #+BEGIN_SRC python
+        def Floyd(G = (V, E)):
+          for v in V:
+            d[v][v][0]= 0
+          for node(u, v) in E:
+            d[u][v][0] = W(u, v)
+          for k in range(1, len(V)):
+            for i in range(1, len(V)):
+              for j in range(1, len(V)):
+                if d[i][j][k-1] > d[i][j][k-1] + d[k][j][k-1]:
+                  d[i][j][k] = d[i][k][k-1] + d[k][j][k-1]
+                else:
+                  d[i][j][k] = d[i][j][k-1]
+     #+END_SRC
+** More DP Problems
+   - Can a string s be split into words
+     - canSplit("abcnmcdms") \rightarrow False
+     - canSplit("ilikeoranges") \rightarrow True
+   - String s has length of n
+   - SP(s_i)
+     - let s_i denote the first i characters of s
+     - let s[i, j] be the substring of s from s[i] to s[j] inclusive \Rightarrow s[i, i] = s[i]
+     - canSplit(s_i) = V^i_{j=1}(canSplit(s_{j-1}_{}) ^ isWord(s[j, i]))
+* Lecture Six
+** Flow Network
+   - Directed Graph, G=(V, E)
+   - A single source vertex s
+   - A single target vertex t
+   - if (u, v)\in{}E \Rightarrow (v, u)\notin{}E: no anti-parallel edge
+   - Non-negative capacity function, c(u, v)
+*** Def'n
+    - Let f(u, v) be a "flow" value for each edge (u, v)
+    - f is a valid flow if it satisfies two properties
+      1) \forall{}u, v O\le{}f(u, v)\le{}c(u, v)
+      2) \forall{}u \in V-{s, t} \sum_{v \in V}f(v, u) = \sum_{v \in V}f(u, v)
+*** First Idea
+    - Keep finding valid paths from s to t, send as much flow as possible, keep repeating this until no path remains
+      - Return |f|
+      - Find a new path and send low, called augmenting path
+      - Informally, Ford-Fulkerson Method
+** Max-flow-Min-cut
+   - FF is correct iff
+     1) |f| is a max flow \Rightarrow \exists an augmenting path in G_f
+     2) if ther's no augmenting path in G_f \Rightarrow |f| is maximized
+*** Def'n 
+    - A cut (S, T) of a flow netowkr G=(V, E) is a partition of V such that s\in{}S, t\in{}T, S\union{}T = V
+    - Flow across a cut (S, T) = \sum_{u \in S} \sum_{v \in T} f(u, v) - \sum_{u \in S} \sum_{v \in T} f(v, u)
+* Lecture Seven
+** Recap 
+   - Given a directed graph or a flow network, what's the max flow form from s to t
+     - Find a path from s to t
+     - Send flow across path
+     - Doesn't work
+   - Have a correspinding residual netowkr
+     - Keeps track of backflows
+     - Find "augmenting paths" in the RN and send flow
+     - Repeat
+     - This works vis max flow main-cut theorem
+       - Ford-Fulkerson method
+     - Let f* denote max flow; m # of edges
+     - O(m) we can find a path, update flows, capacities, etc)
+       - Psuedopolynomial
+** Max Flow
+   - When finding paths, use BFS
+     - We complexity O(nm^2) = O(VE^2)
+     - This is called Edmond-Karp's algorithm
+*** Maximum-Matching in bipartite graphs
+    - Given a graph G=(V, E) and two disjoint sets L and R, where L\cup{}R = V and all edges "start" in L and "end" in R
+      - Find M\subseteq{}E where \forall{}(u, v)\in M, u and v appear only once
+* Lecture Eight
+** Complexity
+*** P - Polynomial Time
+    - All problems which can be solved in polynomial time O(n^k)
+      - Sorting, searching, graph problems, max-flow
+      - Knapsack is not in P
+    - Considered "easy"
+*** NP - Non-deterministic Polynomial Time
+    - We can determine if a given solution is correct or not in polynomial time
+    - Considered "hard"
+    - Sudoku
+      - Fill in the grid so the digits 1-9 appear exactly once in every row, column, and subgrid (3x3 square)
+    - Knapsack Problem-Decision
+      - Given a knapsack problem, does there exist a solution which has total value of at least V
+      - What is someome gives you a set of items and claims it's a solution
+        - Sum the values (\sum{}v_i \ge V)
+        - Check total weight (\sum{}w_i \le C)
+    - Can check in polynomial time
+    - P\subset{}NP
+**** NP-Complete
+     - The "hardest" problems to solve in NP
+     - If you solve these, you solve all NP problems
+**** NP-Hard
+     - All problems which are just as "hard" as the NP complete problems
+*** What do you need to solve an NP problem
+    - Sacrifice Generality
+      - Knapsack on A1
+    - Sacrifice Optimality
+      - Approximation, within a constant factor of the optimal
+    - Sacrifice Reliability
+      - Get the optimal solution most of the time
+    - Solve P = NP
+** Vertex Cover Problem
+   - Given a graph G=(V, E) a subset of verticies C\subseteq{}V us a vertex cover iff \forall{}(u, v)\in{}E: u\in{}C or v\in{}C
+   - Finding if there exists a vertex cover of size |C|=k is NP-Complete
+   - Finding the smallest vertex cover, min(|C|) is NP-Hard
+   #+BEGIN_SRC python
+     def greedy_sol():
+         G = {}
+         E_prime = {}
+         while E_prime is not {}:
+           u, v = some_edge_in(E_prime)
+           C = C + {u, v}
+           remove_all_incident_edges((u, v))
+         return C
+   #+END_SRC
+   - The greedy algorithn is a "2-approximation" of vertex cover
+     - |C^G| \le 2|C*|
+     - Proof
+       - Let A denote the set of edges "chosen" by the algorithm
+       - Because no two edges in A share a start of end piint, all vertex ocers must include at least one start/end point of each edge in A.
+       - \forall vertex covers C, |C| \ge |A| \Rightarrow |C*| \ge |A|
+** Load Balancing
+   - Given m identical machines, and n jobs each within size S_j for job j
+   - How do you best destribute these jobs?
+   - Let M_i be the i^{th} machine, and let A(i) be the set of jobs assignmed to M_i
+   - We say the load on M_i is T_i, where T_i = \sum_{j\in{}A}S_j
+   - Let T = max(T_i), T is referred to as the makespan
+*** Example
+    - We have 3 machines and jobs with size 2, 3, 4, 6, 2, 2
+      - Optimal Sol T = 7
+        - M_1 = 2, 2, 2
+        - M_2 = 6
+        - M_3 = 3, 4
+      - Greedy Sol
+        #+BEGIN_SRC python
+          def greedy_sol():
+            for j in J:
+              Mi = get_machine_with_lowest_load()
+              A(i) = A(i) + {j}
+              Ti = Ti + sj
+            return max(Ti)
+        #+END_SRC
+        - T = 8
+          - M_1 = 2, 6
+          - M_2 = 2, 3
+          - M_3 = 2, 4
+      - Optimal Algorithm
+        - T* \ge $\frac{1}{m}\sum{}^{n}_{j = 1}s_j
+        - J = {1, 2, 3, 10^10} \Rightarrow T* \ge 10^10
+          - T* \ge max(S_j)
+        - Consider the greedy algorithm
+          If after execution M_i has the highest load, consider the moment right before the greedy algorithm puts the final job k onto that machine M_i\\
+          T_i is the load of M_i after execution, what's its load the moment before job j is added. T_i = S_j, at this moment, what's true about all other loads?
+          - \sum_{k = 1}^m T_k \ge m(T_i - S_j)
