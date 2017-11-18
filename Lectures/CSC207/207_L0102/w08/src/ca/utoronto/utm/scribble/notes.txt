@@ -1,0 +1,2 @@
+Git merge and branch and conflict resolution
+https://git-scm.com/book/az/v1/Git-Branching-Basic-Branching-and-Merging

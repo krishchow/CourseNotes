@@ -1,0 +1,30 @@
+
+EXERCISE:
+
+Create an abstract class for an Animal.
+
+All Animals have a name, and a sound that 
+they can make (e.g. "moo", "meow").
+
+All Animals can makeNoise which prints 
+out "[name] says [sound]".
+
+All Animals should be able to walk.
+(this will be an abstract method; different for
+every animal)
+
+-
+
+Create a concrete (non-abstract) class called 
+Cat which inherits from Animal.
+
+public Cat(String name)
+
+By default, cats make the sound "meow".
+
+They have a cat-specific method called "purr" that 
+prints out "[name] says purrrrr".
+
+When a cat walks, it prints out 
+"LOL. no. sleeping."
+

@@ -1,0 +1,56 @@
+***
+kgutierrez6/JugPuzzleGame/src/JugPuzzleGUIController.java
+***
+MARKS For Assignment 1, Part 2
+GUI: 3.5/5
+CODE: 4.5/5
+END MARKS
+***
+bprice8/JugPuzzleGame/src/JugPuzzleGUIController.java
+***
+MARKS For Assignment 1, Part 2
+GUI: 3.5/5
+CODE: 4.5/5
+END MARKS
+***
+tleej/JugPuzzleGame/src/JugPuzzleGUIController.java
+***
+MARKS For Assignment 1, Part 2
+GUI: 3.5/5
+CODE: 4.5/5
+END MARKS
+***
+abrowna/JugPuzzleGame/src/JugPuzzleGUIController.java
+***
+MARKS For Assignment 1, Part 2
+GUI: 3.5/5
+CODE: 4.5/5
+END MARKS
+***
+jyoungt/JugPuzzleGame/src/JugPuzzleGUIController.java
+***
+MARKS For Assignment 1, Part 2
+GUI: 3.5/5
+CODE: 4.5/5
+END MARKS
+***
+karnold9/JugPuzzleGame/src/JugPuzzleGUIController.java
+***
+MARKS For Assignment 1, Part 2
+GUI: 3.5/5
+CODE: 4.5/5
+END MARKS
+***
+bfoxx/JugPuzzleGame/src/JugPuzzleGUIController.java
+***
+MARKS For Assignment 1, Part 2
+GUI: 3.5/5
+CODE: 4.5/5
+END MARKS
+***
+ewoods3/JugPuzzleGame/src/JugPuzzleGUIController.java
+***
+MARKS For Assignment 1, Part 2
+GUI: 3.5/5
+CODE: 4.5/5
+END MARKS

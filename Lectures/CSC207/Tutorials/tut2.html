@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="http://axiom.utm.utoronto.ca/~207/16f/styles.css" type="text/css" />
+
+
+		<title>CSC207 Fall 2016 - Week 3, Lab 2</title>
+	</head>
+	<body>
+		<nav>
+
+    <div class="title">
+      <a href="http://axiom.utm.utoronto.ca/~207/16f/index.shtml"><h1>CSC207</h1></a>
+      <h2>UTM • Fall 2016</h2>
+    </div>
+    
+  <ul class="links">
+    <li><a href="http://axiom.utm.utoronto.ca/~207/16f/infosheet.pdf">Syllabus</a></li>
+    <li><a href="http://axiom.utm.utoronto.ca/~207/16f/lectures.shtml">Lectures and Labs</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/assignments.shtml">Assignments</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/tests.shtml">Tests</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/resources.shtml">Resources</a></li>
+</ul>
+
+</nav>
+<!--$Id:$-->
+
+		<div class="content">
+
+	<!--<h2>CSC207 Fall 2016 - Lab 2 Instructions (Week 3)</h2>-->
+		<h2>Lab 2 (Week 3) Writing an OO Java Program </h2>
+		<h3>Overview</h3>
+		This week, you are going to implement two Java classes. Given time, you should also write some test cases and 
+		document the classes by providing Javadoc comments.
+	
+		<h3>Notes</h3>
+		<ul>
+		<li> Please login and work on the lab systems!!
+		<li> Marks for the lab are for committing and pushing your work to the repo.
+		<li> During the lab, if you know what you are doing, and can help your neighbour, then help them. If you need help, ask us or your neighbour.
+		</ul>
+		
+		<h3>References</h3>
+<xmp>
+Sadia: 
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207prep.git
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0101.git
+
+Arnold 12-2
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0102.git
+
+Arnold 3-5
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0103.git
+
+Also, you might want to verify your utorid
+	https://www.utorid.utoronto.ca
+see the bottom left...
+	https://www.utorid.utoronto.ca/cgi-bin/utorid/verify.pl
+</xmp>
+
+
+		<h3>Setup and Submission</h3>
+		<ul>
+			<li>Launch Eclipse Neon (if you see a blank screen, close the blank tab)
+			</li>
+			
+			<li>Switch to Git perspective (or Window &gt; Show View &gt; Other &gt; Git &gt; Git Repositories) to view a list
+			of all your git repositories in your Eclipse sidebar.</li>
+			<li>
+			Right click on your repo_UTORID.git repo and select "Pull".</li>
+			<li>File &gt; Import &gt; Git &gt; Projects from git</li>
+			<li>Select "Existing local repository"</li>
+			<li>Select repo_UTORID</li>
+			<li>Select "Import existing Eclipse project" and from the dropdown, select LabWeek03 (<b>the <u>whole</u> directory; don't browse into it</b>). Select "Next", then "Finish"</li>
+			<li>Now switch to Java Perspective and work with the files in the LabWeek03 project</li>
+		<li>As you work on the lab, commit your changes as follows: Right-click LabWeek03, and select Team &gt; Add to Index (this is git add), then right-click again and select Team &gt; Commit.</li>
+		<li>In the "Git Staging" window, enter appropriate commit message, and then click the "Commit and Push" button.</li>
+				<!--
+			</li>
+			<li>Expand your repo in the sidebar, and within "Working Tree", you should find a new "LabWeek03" directory.</li>
+			<li>Expand LabWeek03 &gt; src, to view files Sodacan.java and Person.java</li>
+			<li>Modify these files as you work on today's lab.</li>
+		<li>As you work on the lab, commit your changes as follows: Right-click LabWeek03, and select Add to Index (this is git add).</li>
+		<li>Then in the "Git Staging" window, enter appropriate commit message, and then click the "Commit and Push" button.</li>
+			
+			<li>
+			Create a new Java project in Eclipse named LabWeek03; you will be creating your classes for this lab within this project.
+			</li>
+			<li>
+			Add this project to your lab repo from last week by right-clicking on the LabWeek03 project, selecting Team &gt; Share Project, and selecting your repo (if Eclipse is not aware of your repo, follow instructions under 'Making Eclipse aware of the Repo' from <a href="http://axiom.utm.utoronto.ca/~207/16f/labs/02/">last week's lab</a>)
+			</li>
+			<li>Right-click the project, and select Team, then Add to Index (this is git add)
+		<li>As you work on the lab, commit your changes as follows: Right-click the project, and select Team, then select Commit, enter appropriate commit messages, and then commit and push.</li>
+		--><strong><font color="red"><li>SUBMISSION: Remember to "Commit and Push" your project at the end of your lab so we can see the most updated version of your lab work.</li></font></strong>
+		</ul>
+		
+		<h3>1. Class SodaCan</h3>
+		Implement the class SodaCan using instance variables and methods to capture the following (see <a href=hints1.html>hints</a>):
+		<ul>
+		<li>A SodaCan has a <b>type</b> (i.e. Coke, Sprite, Root Beer), it is either <b>open or closed</b>, it has an <b>amount</b> of soda in it (at least 0).</li>
+		<li>For this question, assume that SodaCans start out closed with 250cc of soda in them.</li>
+		<li>A SodaCan be <b>opened</b> (but can't be closed once opened).</li>
+		<li>Once open, either <b>sips</b> (remove 10cc) or <b>gulps</b> (remove 50cc) can be taken from them. Remember, amount must be at least 0 (i.e. if removing 10cc would make amount negative, amount should become 0).  Both methods should return the amount of soda actually removed.</li>
+		<li>The <b>string</b> representation (from method toString) of a SodaCan displays its type, whether or not it is open/closed, and its amount.</li>
+		</ul>
+		Once you are done implementing this class, <b>write a main method</b> which creates a few SodaCans and then takes sips and gulps from them.</li>
+		</ul>
+
+		
+		<h3>2. Class Person</h3>
+		Implement the class Person using instance variables and methods to capture the following:
+		<ul>
+		<li>A Person has a <b>thirstStatus</b> which is 'satisfied', 'thirsty' or 'very thirsty', and <b>amountDrunk</b> which keeps track of how much soda they have drunk so far.</li>
+		<li>A very thirsty person has drank no soda. A thirsty person has already drank 175cc of soda. A satisfied Person
+			has drank 375cc of soda.</li>
+			<li>Initially, a Person is very thirsty.</li>
+			<li>A person can <b>takeSip(SodaCan)</b>,
+			they can also <b>takeGulp(SodaCan)</b>. </li>
+		<li>The <b>string</b> representation of a Person displays their thirstStatus and their amountDrunk.</li>
+		</ul>
+		
+		<h3>3. Playing with both classes</h3>
+		<ul>
+		<li>Within a <b>main method</b>, create a few SodaCans and a few Persons. </li>
+		<li>Open some of the SodaCans and have the Persons take some sips and gulps from them. 
+		You should see the amount of soda in the cans drop at the same time the amount of soda that the person has drunk going up.
+			You should see some of the People going from 'very thirsty' to 'thirsty' to 'satisfied'.</li>
+		<li> Given time, write some test cases and JavaDoc your code.</li>
+		</ul>
+		<div class="spacer">
+		&nbsp;		
+		</div>
+
+		</div>
+
+    <div class="spacer" />
+
+   
+  </body>
+</html>
+

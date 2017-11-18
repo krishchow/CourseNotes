@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="http://axiom.utm.utoronto.ca/~207/16f/styles.css" type="text/css" />
+
+
+		<title>CSC207 Fall 2016 - Week 3, Lab 2</title>
+	</head>
+	<body>
+		<nav>
+
+    <div class="title">
+      <a href="http://axiom.utm.utoronto.ca/~207/16f/index.shtml"><h1>CSC207</h1></a>
+      <h2>UTM • Fall 2016</h2>
+    </div>
+    
+  <ul class="links">
+    <li><a href="http://axiom.utm.utoronto.ca/~207/16f/infosheet.pdf">Syllabus</a></li>
+    <li><a href="http://axiom.utm.utoronto.ca/~207/16f/lectures.shtml">Lectures and Labs</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/assignments.shtml">Assignments</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/tests.shtml">Tests</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/resources.shtml">Resources</a></li>
+</ul>
+
+</nav>
+<!--$Id:$-->
+
+		<div class="content">
+		
+				<h2>Lab 4 (Week 5) GUI Programming in Java </h2>
+
+<h3>Notes</h3>
+		<ul>
+		<li> Please login and work on the lab systems!!
+		<li> Marks for the lab are for committing and pushing your work to the repo.
+		<li> During the lab, if you know what you are doing, and can help your neighbour, then help them. If you need help, ask us or your neighbour.
+		</ul>
+		
+		<h3>References</h3>
+		Lecture notes can be found here (cloning these onto the lab computers may make you exceed quota; clone these on your own machine. 
+		Or, clone them on lab computer, look at necessary files, then delete them and empty trash.):
+<xmp>
+Sadia:
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207prep.git
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0101.git
+
+Arnold 12-2
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0102.git
+
+Arnold 3-5
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0103.git
+</xmp>
+
+		<h3>Setup and Submission</h3>
+
+			<li>Launch Eclipse Neon (if you see a blank screen, close the blank tab)
+			</li>
+			
+			<li>Switch to Git perspective (or Window &gt; Show View &gt; Other &gt; Git &gt; Git Repositories) to view a list
+			of all your git repositories in your Eclipse sidebar.</li>
+			<li>
+			Right click on your repo_UTORID.git repo and select "Pull" (if you don't have this directory, follow instructions under the "Git" and "Making Eclipse aware of your repo" from the 
+			<a href="http://axiom.utm.utoronto.ca/~207/16f/labs/02/">first lab</a>).</li>
+			<li>File &gt; Import &gt; Git &gt; Projects from git</li>
+			<li>Select "Existing local repository"</li>
+			<li>Select repo_UTORID</li>
+			<li>Select "Import existing Eclipse project" and from the dropdown, select LabWeek05 (<b>the <u>whole</u> directory; don't browse into it</b>). Select "Next", then "Finish"</li>
+			<li>Now switch to Java Perspective and work with the files in the LabWeek05 project</li>
+		<li>As you work on the lab, commit your changes as follows: Right-click LabWeek05, and select Team &gt; Add to Index (this is git add), then right-click again and select Team &gt; Commit.</li>
+		<li>In the "Git Staging" window, enter appropriate commit message, and then click the "Commit and Push" button.</li>
+	<strong><font color="red"><li>SUBMISSION: Remember to "Commit and Push" your project at the end of your lab so we can see the most updated version of your lab work.</li></font></strong>
+		</ul>
+		
+			<h3>Lab Instructions</h3>
+	
+	<p>		
+		You might think that this is about GUI programming, really
+		it is a way to trick you into learning about interfaces as well as
+		inheritance (extends).</p>
+		<p>
+		You should find several Swing examples in the LabWeek05 directory in your repository. This
+		is the same code we worked through during last lecture.
+		<ol>
+		<li> First, as I did in lecture, fix HiBye.java and HiByeActionListener.java as described in the code.
+			Remember, to fix this, you will need to modify the constructor for HiByeActionListener.
+		<li> Create class PrimeTester inside the LabWeek05 project. PrimeTester should launch the following GUI. Three different 
+			application screenshots are shown below.
+			<center>
+				<img src=primeTester2.gif />
+				<br/>
+				<br/><img src=primeTester3.gif /> 
+				<br/>
+				<br/><img src=primeTester1.gif />
+			</center>
+			This consists of a JTextField, a JButton and another JTextField. The second JTextField is set to be non-editable (take
+			a look at the Java API for a JTextField to see how to set it to be non-editable.
+			For this example, copy HiBye.java to PrimeTester.java and copy HiByeActionListener.java to PrimeTesterActionListener.java.
+
+			<p>To parse an integer and catch errors, use something like the following ...
+<xmp>
+		try {
+			int n=Integer.parseInt(this.question.getText());
+			// n is a valid integer in here...
+				
+		} catch(NumberFormatException nfe){
+			System.out.println("invalid number");
+		}
+</xmp>
+			<p> Use the following isPrime method.
+<xmp>
+	private boolean isPrime(int n){
+		for(int i=2;i<n;i++){
+			if(n%i == 0) return false;
+		}
+		return true;
+	}
+</xmp>
+		<li> You are going to re-build the above application, this time, copy UseButtonPanel.java to PrimeTester2.java and
+			copy ButtonPanel.java to PrimeTesterPanel.java. Complete PrimeTester2.java and PrimeTesterPanel.java
+			so that it duplicates the functionality in question 2. Consider yourself doing VERY WELL if you understand
+			how this works!
+		</ol>
+	</body>
+</html>

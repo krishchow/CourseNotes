@@ -1,0 +1,54 @@
+Hey there!!
+
+Git: 
+
+	What you do (depending on your lecture section): 
+	git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0101.git
+	git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0102.git
+	git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0103.git
+
+	git pull
+	git log
+	git checkout COMMIT_ID
+	git checkout master
+	
+	What I do:
+	git status
+	git add --all .
+	git commit -m 'this is a commit message'
+	git push
+
+	Tutorials:
+	https://www.atlassian.com/git/tutorials/
+	https://git-scm.com/docs/gittutorial
+
+	Viewing old commits:
+	https://www.atlassian.com/git/tutorials/viewing-old-commits/
+	https://githowto.com/getting_old_versions
+
+
+Readings:
+	http://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html
+
+The website: http://axiom.utm.utoronto.ca/~207/16f
+The syllabus (on the website). 
+
+Why Java:
+	Developed to solve software engineering problems, to program in the large.
+
+	Popular: http://www.tiobe.com/tiobe-index/
+	Fast:   http://benchmarksgame.alioth.debian.org/u64q/which-programs-are-fastest.html
+		http://benchmarksgame.alioth.debian.org/u64q/python.html
+	Good IDE: https://eclipse.org/home/index.php (later)
+	Android: https://developer.android.com/index.html
+	Lots of software for it!!! Start with the JDK (api link below)
+
+References:
+	http://docs.oracle.com/javase/tutorial/
+
+	http://docs.oracle.com/javase/8/docs/api/  THE IMPORTANT LINK!!!!
+
+	http://www.cs.toronto.edu/~arnold/cit/summer2007/code/NonOOFeatures/index.html
+
+If I can't login to cslinux (or git clone):
+	email andrew.wang@utoronto.ca

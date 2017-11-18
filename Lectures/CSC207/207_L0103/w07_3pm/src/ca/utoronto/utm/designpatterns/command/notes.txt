@@ -1,0 +1,4 @@
+https://dzone.com/articles/design-patterns-command
+Calendar events
+Schedule for account operations (ie transfer from/to on this date)
+Enables Undo

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="http://axiom.utm.utoronto.ca/~207/16f/styles.css" type="text/css" />
+
+
+		<title>CSC207H: Course Webpage</title>
+	</head>
+	<body>
+		<nav>
+
+    <div class="title">
+      <a href="http://axiom.utm.utoronto.ca/~207/16f/index.shtml"><h1>CSC207</h1></a>
+      <h2>UTM • Fall 2016</h2>
+    </div>
+    
+  <ul class="links">
+    <li><a href="http://axiom.utm.utoronto.ca/~207/16f/infosheet.pdf">Syllabus</a></li>
+    <li><a href="http://axiom.utm.utoronto.ca/~207/16f/lectures.shtml">Lectures and Labs</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/assignments.shtml">Assignments</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/tests.shtml">Tests</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/resources.shtml">Resources</a></li>
+</ul>
+
+</nav>
+<!--$Id:$-->
+
+		<div class="content">
+
+
+		<h2>Lab 1 (Week 2) Non OO Java, Eclipse and git </h2>
+		<h3>References</h3>
+<xmp>
+Sadia: 
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207prep.git
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0101.git
+
+Arnold 12-2
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0102.git
+
+Arnold 3-5
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0103.git
+
+Also, you might want to verify your utorid
+	https://www.utorid.utoronto.ca
+see the bottom left...
+	https://www.utorid.utoronto.ca/cgi-bin/utorid/verify.pl
+</xmp>
+
+		<h3>Git</h3>
+		We have created repositories for you, 
+		<ol>
+		<li> 
+		Bring up a command prompt (terminal) then do the following
+<xmp>
+cd ~
+git clone ssh://$USER@cslinux.utm.utoronto.ca/student/cslec/207/repos/repo_$USER.git
+# NOTE: $USER will automatically be replaced by your UTORID in the command prompt on our systems.
+# From home, replace $USER with your UTORID.
+</xmp>
+		<li> Possible problem: git may complain as follows:
+<xmp>
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+The RSA host key for cslinux.utm.utoronto.ca has changed,
+and the key for the corresponding IP address 142.150.1.123
+has a different value. This could either mean that
+DNS SPOOFING is happening or the IP address for the host
+and its host key have changed at the same time.
+Offending key for IP in .../.ssh/known_hosts:11
+</xmp>
+		If so, edit the known_hosts file and remove the offending line, in my case, 
+		line 11.
+
+		<li> Notice that there is now a repo_$USER directory in your main directory.
+		<li> Please familiarize yourself with a few common unix commands...<code>ls, cd, pwd</code> and at least one text editor.
+		</ol>
+
+		<h3> Running Eclipse </h3>
+		<ol>
+		<li> In a terminal launch Eclipse Neon via <code> /opt/eclipse/eclipse </code>
+		<li> It will ask you to create a workspace, do it.
+		<li> In Eclipse, Click on the top right to go to the workbench
+		</ol>
+		<h3>LabWeek02</h3>
+		<ol>
+		<li> Follow along with your TA to create and run your first project (LabWeek02).
+		<xmp> Summary: 
+		File->New Project
+		Name the project LabWeek02 then Finish
+		Expand LabWeek02
+		Click on src
+		File->New->Class
+		Name: HelloWorld
+		then change its contents so that it matches that below
+		</xmp>
+<xmp>
+public class HelloWorld {
+	public static void main(String [] args){
+		System.out.println("HelloWorld");
+	}
+}
+</xmp>
+		<li> Save the files contents
+		<li> Run it! (run icon on the top)
+		<li> You should see "HelloWorld" in the console tab at the bottom.
+		</ol>
+		<h3>HelloWorld2</h3>
+		<ol>
+		<li> Add class HelloWorld2 also with a main method so that 
+			when run, this class prints out "HelloWorld2!".
+		<li> How do you run the main in class HelloWorld now?
+		</ol>
+
+		<h3> Making Eclipse aware of the Repo </h3>
+		So far we have not been using the repo. Now we will make Eclipse aware of the repo.
+		<ol>
+		<li> On the top right, next to Quick Access, there is a box with a +, click to Open Perspective
+		<li> Select the git perspective
+		<li> In the Git Repositories tab, select the Git+ button which, 
+			when you hover over it, reads 
+			<blockquote>
+			Add an existing local Git repository to this view
+			</blockquote>
+		<li> Browse to add repo_$USER to Eclipse. Then select the repo_$USER/.git
+			and Finish.
+		<li> Eclipse can now make use of the repo
+		<li> You might want to switch back to the Java Perspective (next to Quick Access, the button with aa J in it).
+		</ol>
+		<h3> Using the Repo </h3>
+		<ol>
+		<li> right-click on the LabWeek02 project, and select Team &gt; Share-Project
+		<li> Choose your repo and Finish
+		<li> Notice the change to all of the icons involved in the project
+		<li> right-click the project, and select Team, then Add to Index (this is git add)
+		<li> right-click the project, and select Team, then select Commit. Now put in the 
+			following commit message "My first project commit"
+			and then commit and push. A password dialog should appear.
+		</ol>
+		<h3> Adding more to your project </h3>
+		<ol>
+		<li> Add class SumNums with the following initial content...
+<xmp>
+import java.io.*; 
+import java.util.*;
+public class SumNums {
+
+	public static void main(String[] args) {
+		Scanner scanner=new Scanner(System.in);
+
+		String line;
+		int start, end;
+		while(true){
+			System.out.println("Starting number: ");
+			start=scanner.nextInt(); 
+			System.out.println("Ending number: ");
+			end=scanner.nextInt();
+			int sum=0;
+			// You have something to fix here!
+			System.out.println("The sum from "+start+ " to "+ end + " is: "+ sum);
+		}
+	}
+
+	// Create static method sumup(s,e) which returns the sum s+(s+1)+...+(e-1)+e
+	// or 0 if this sum does not make sense (ie sumup(3,-4)).
+}
+</xmp>
+		<li> Run the above code
+		<li> Add it to the index (right click on the project and then team)
+		<li> Commit and push it (right click on the project and then team)
+		</ol>
+		<h3> A first User Story </h3>
+		<ol>
+		<li> You will complete the following User Story (see class SumNums)...
+<xmp style="border:1px solid black;">
+Story Card:
+A user specifies a starting and ending number. 
+The ending number at least as big as the starting.
+The system responds with the sum of all of the 
+numbers between and including
+the starting and ending numbers. 
+We expect that the user will always supply integers.
+</xmp>
+		<li> If you are interersted in what a Scanner is (in SumNums), take a look at <a href=http://download.oracle.com/javase/8/docs/api/>the Java api</a>, find the Scanner class (bottom left frame).
+		<li> Make sure you add the <code>public static int sumup(int s, int e)</code> method.
+		<li> Run your program
+		<li> Add all files
+			Commit and push your project (right click LabWeek02, Team-&gt;Commit. Provide a useful message so that anyone that checks out your project will know why you made the changes.
+		<li> Take a look at the repository in your browser as well as on your desktop. If you want to update your desktop copy, you can go into the LabWeek02 directory and commit changes.
+		</ol>
+
+		<h3>Counting to 10</h3>
+<xmp>
+Story Card:
+When the program is run, the system simply prints out the numbers from 1 to 10.
+</xmp>
+		<ol>
+		<li> Create class CountTo10 (inside LabWeek02). 
+		<li> Create a 'main' method and put your counting and printing code in there.
+		<li> Compile and run it.
+		<li> Commit your changes to LabWeek02
+		</ol>
+
+		<h3>Prime Numbers</h3>
+Remember that an integer greater than 1 is prime if its only divisors are one and itself. 
+So 2, 3, 5 and 101 are prime, while -7, 0 and 12 are not.
+<xmp>
+Story Card:
+A user specifies a number n. The system responds with either "n is prime" 
+or "n is not prime".
+We expect that the user will supply a number.
+</xmp>
+		<ol>
+		<li> Create class PrimeTester with a <code>main</code> method. Steal code from SumNums to get you started.
+		<li> Write an <code>isPrime(n)</code> static method which returns <b>true</b> if n is prime and <b>false</b> otherwise.
+		Use this in your main to help you complete your task.
+		<b>Note:</b> In Java you can find the remainder on division of p by q by using p%q (this is p mod q).
+<xmp>
+if(p%q==0){
+    System.out.println(p+" is divisible by "+q);
+}
+</xmp>
+		<li> Make sure you commit LabWeek02, we may go in and check your progress (yes, we can check out your repository as well).
+		</ol>
+		</div>
+
+    <div class="spacer" />
+
+   
+  </body>
+</html>
+

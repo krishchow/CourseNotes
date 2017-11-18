@@ -1,0 +1,349 @@
+-----------------------------------------------------------
+Integers Base 2
+-----------------------------------------------------------
+123 written base 2 is found by repeatedly %2 then div 2
+123  %  2 =      1
+123 div 2 = 61
+61   %  2 =      1
+61  div 2 = 30
+30   %  2 =      0
+30  div 2 = 15
+15   %  2 =      1
+15  div 2 = 7   
+7    %  2 =      1   
+7   div 2 = 3   
+3    %  2 =      1
+3   div 2 = 1   
+1    %  2 =      1
+1   div 2 = 0   
+
+So 123 is 1111011 base 2
+
+To see why this works, note that if 123 was already written
+base 2, we would be manipulating the bits of 123 by pulling 
+off the least significant bit (%2) and then shifting right (div 2).
+
+111101  %  2 = 1
+111101 div 2 = 11110
+11110   %  2 = 0
+11110  div 2 = 1111
+...
+
+-----------------------------------------------------------
+Floating Point Number
+-----------------------------------------------------------
+A Floating Point Number is a number of the form
+
+123.4567 which represents
+
+1x10^2+2x10^1+3x10^0+4x10^(-1)+5x10^(-2)+6x10^(-3)+7x10^(-4)
+1      2      3      4         5         6         7
+
+We can re-write this as a Normalized Floating Point Number as
+
+1.234567x10^(2) 
+
+That is, as +/-d1.d2 d3 d4 ... dn x 10^(m) 
+where d1 is non-zero. 
+
+Floating point numbers on computers are
+written using (base 2). 
+
+Example:
+
+12.25 (base 10) is the (base 2) number
+
+1100.01
+
+That is, 
+
+1x2^3+1x2^2+0x2^1+0x2^0+0x2^(-1)+1x2^(-2)
+1     1     0     0     0        1
+
+Normalized, this is
+
+1.10001 x 2^(3)
+
+Def: When a number is written down as
++/- d1.d2 d3 ... .dn x 2^(m) we call 
+                +/- the sign
+    d1 d2 d3 ... dn the mantissa
+                  m the exponent
+
+The IEEE 754 Floating Point Single Precision Standard
+defines how 32 bits (4 bytes) are used to represent
+floating point numbers. 
+
+There are two types of numbers represented:
+Normalized and De-Normalized 
+
+-----------------------------------------------------------
+Normalized numbers
+-----------------------------------------------------------
+The standard states that 32 bits are to be used as follows
+
+s[eeeeeeee]mmmmmmmmmmmmmmmmmmmmmmm
+1    8             23        bits
+
+represents the number...
+
+s 1.mmmmmmmmmmmmmmmmmmmmmmm x 2^(eeeeeeee-127)
+
+----------------------------------
+s[eeeeeeee]mmmmmmmmmmmmmmmmmmmmmmm
+^ sign
+----------------------------------
+
+s is the sign bit
+	s is 0 if the number is positive
+	s is 1 if the number is -ve
+
+----------------------------------
+s[eeeeeeee]mmmmmmmmmmmmmmmmmmmmmmm
+  ^^^^^^^^ exponent
+----------------------------------
+
+eeeeeeee is the 8 bits of the exponent
+	written in excess 127, that is,
+	realExponent = eeeeeeee-127
+
+For Normalized numbers, 
+eeeeeeee!=00000000
+eeeeeeee!=11111111
+
+Example: 
+If the bits of the exponent are
+00000010 (this is 2 base 10)
+then realExponent = 00000010-127 = -125
+
+The range of normalized exponents is then
+
+00000001-127 to 111111110-127 =
+        -126 to 127
+
+----------------------------------
+s[eeeeeeee]mmmmmmmmmmmmmmmmmmmmmmm
+  mantissa ^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------
+
+Since we are using base 2, for normalized numbers,
+we know the leading digit is 1, so we don't need to
+waste a bit of data on it. That is, for normalized
+numbers, the 1 is hidden so the bits
+
+s[eeeeeeee]mmmmmmmmmmmmmmmmmmmmmmm
+
+represents
+
+s 1.mmmmmmmmmmmmmmmmmmmmmmm x 2^(eeeeeeee-127)
+
+Example:
+12.25 (base 10)
+= 1100.01
+= 1.10001 x 2^(3)
+= 1.10001 x 2^(130-127)
+= 1.10001 x 2^(10000010-127)
+= 0[10000010]10001000000000000000000
+
+Example: .1 (=1/10) written base 2 is 
+
+               ----
+0.00011001100110011 x 2^(-4)
+
+Get this by repeatedly x2 then look at ones digit.
+Why does this work? Same intuition as in Integers Base 2
+above.
+
+Note: So some nice numbers (base 10) are not nice base 2!
+That is they don't have a finite representation base 2.
+
+.1 (base 10) is represented in IEEE 754 as
+
+0[01111011]10011001100110011001101=+1.10011001100110011001101x2^(-4)=0.1
+
+Note: the hidden 1, also the rounded last digit.
+-----------------------------------------------------------
+Rounding (to Even)
+-----------------------------------------------------------
+IEEE754 standard says round numbers to nearest representable
+number. If there is a tie (ie midway between two representable
+numbers), then round to the one with a 0 least significant digit.
+
+Example:  
+
++1.10011001100110011001100x2^(-4)
+                         ^ least significant bit in IEEE754 Single
+.1 base 10 is            V      ----
++1.100110011001100110011001100110011x2^(-4)=0.1
+                         ^ 
+                         V 
++1.10011001100110011001101x2^(-4)   (this number chosen, nearest)
+
+Example: 
+
++1.10011001100110011001100x2^(-4)   (this number chosen, broken tie)
+                         ^ least significant bit in IEEE754 Single
+                         V      
++1.100110011001100110011001x2^(-4)
+                         ^ 
+                         V 
++1.10011001100110011001101x2^(-4)
+
+Example: 
+
++1.10011001100110011001101x2^(-4)
+                         ^ least significant bit in IEEE754 Single
+                         V      
++1.100110011001100110011011x2^(-4)
+                         ^ 
+                         V 
++1.10011001100110011001110x2^(-4)   (this number chosen, broken tie)
+
+-----------------------------------------------------------
+The distribution of floating point numbers
+-----------------------------------------------------------
+
+If we have 32 bit integers, no matter how large the numbers
+are, then next one is +1 away. This is not the case for floating
+point numbers. Consider
+
++1.00000000000000000000000 x 2^(0)
+The next number is 
++1.00000000000000000000001 x 2^(0)
+that is, the difference between them is
++0.00000000000000000000001 x 2^(0) = 1 x 2^(-23)
+
+Now consider
++1.00000000000000000000000 x 2^(50)
+the next number is 
++1.00000000000000000000001 x 2^(50)
+that is, the difference between them is
++0.00000000000000000000001 x 2^(50) = 1 x 2^(27)
+= 
+
+That is, while the exponent is 50, consecutive representable
+numbers are 1x2^(27) apart.
+
+So the normalized floating point number line looks like 
+
+0 ....  .  .  .  .    .    .    .    .        .        .        .        .
+
+where each block is a collection of numbers with the same exponent.
+
+-----------------------------------------------------------
+Special Numbers
+-----------------------------------------------------------
+
+Def: Machine Epsilon (eps) is the smallest floating point 
+number in the system such that 1+eps>1.
+
+Example: From the investigation above, we see that
+for IEEE754, eps = 1x 2^(-23), essentially capturing
+the number of bits represented in the mantissa.
+
+Def: Underflow (ufl) is the smallest positive representable number
+
+Example: In the IEEE 754 Single Standard, it appears that ufl is
+0[00000001]00000000000000000000000 = 1.00000000000000000000000 x 2^(-126)
+
+BUT IEEE 754 allows Denormalized numbers (see below), 
+so ufl = 
+
+0[00000000]00000000000000000000001 = 0.00000000000000000000001 x 2^(-126)
+     ^                               ^ 
+     |                               |
+denormalized number -----------------+
+
+= 1 x 2^(-126-23) = 1 x 2^(-149)
+
+Def: overflow is the largest representable number
+
+Example: In the IEE754 Single Precision standard, this is
+
+  0[11111110]11111111111111111111111 
+= +1.11111111111111111111111 x 2^(127)
+= overflow
+
+-----------------------------------------------------------
+Classes of Numbers
+-----------------------------------------------------------
+
+0[00000000]00000000000000000000000 = 0
+
+0[11111111]00000000000000000000000 = Infinity
+
+0[11111111]mmmmmmmmmmmmmmmmmmmmmmm = NaN (Not a Number)
+ where mmmmmmmmmmmmmmmmmmmmmmm != 00000000000000000000000
+
+0[00000000]mmmmmmmmmmmmmmmmmmmmmmm = Denormalized Numbers
+ where mmmmmmmmmmmmmmmmmmmmmmm != 00000000000000000000000
+
+0[eeeeeeee]mmmmmmmmmmmmmmmmmmmmmmm = Normalized Numbers
+ where eeeeeeee!=00000000 and eeeeeeee!=11111111
+
+-----------------------------------------------------------
+Denormalized numbers
+-----------------------------------------------------------
+
+In IEEE754, if the exponent is 0000000, 
+1) the leading hidden digit is 0 (not 1)
+2) switch to excess 126
+
+Example:
+0[00000010]00000000000000000000000 = 1.00000000000000000000000 x 2^(-125)
+                                   = 1.00000000000000000000000 x 2^(-125)
+divide by 2...
+0[00000001]00000000000000000000000 = 1.00000000000000000000000 x 2^(-126)
+                                   = 1.00000000000000000000000 x 2^(-126)
+divide by 2...
+0[00000000]10000000000000000000000 = 0.10000000000000000000000 x 2^(-126)
+                                   = 1.0000000000000000000000  x 2^(-127)
+divide by 2...
+0[00000000]01000000000000000000000 = 0.01000000000000000000000 x 2^(-126)
+                                   = 1.000000000000000000000   x 2^(-128)
+                                                            ^^
+                                                            ||
+Note: There is a loss of precision -------------------------++
+
+so the smallest denormalized number is 
+
+divide by 2...
+0[00000000]00000000000000000000001 = 0.00000000000000000000001 x 2^(-126)
+                                   = 1.                        x 2^(-149)
+-----------------------------------------------------------
+So what!!
+-----------------------------------------------------------
+The issues:
+
+1) Can't represent nice base 10 numbers exactly. (Error introduced here)
+
+2) When performing arithmetic between two representable numbers, 
+   may not be able to exactly represent the result (Error introduced here)
+
+3) Based on the above, comparing floating point numbers is problematic.
+   At best compare via a range of numbers. 
+
+   Example: x==0.0f vs -.0001 <= x && x <= .0001
+
+4) The order in which the calculation is done matters, different order
+   could mean different resulting value. Best to calculate with 
+   similar values.
+
+   Example: in IEEE 754 (done left to right)
+
+   1.0...0 x 2^(0) + 1.0...0 x 2^(-100) - 1.0..0 x 2^(0)    = 0
+   1.0...0 x 2^(0) - 1.0...0 x 2^(0)    + 1.0..0 x 2^(-100) = 1.0..0 x 2^(-100)
+
+5) Values may underflow or overflow during calculation, leading to 
+   incorrect values. Again, the order of calculation matters.
+
+6) Consequences!!
+   http://www.ima.umn.edu/~arnold/disasters/patriot.html
+   http://www.ima.umn.edu/~arnold/disasters/sleipner.html
+   http://www.around.com/ariane.html
+
+
+-----------------------------------------------------------
+Some References
+-----------------------------------------------------------
+https://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Data/float.html

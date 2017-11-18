@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="http://axiom.utm.utoronto.ca/~207/16f/styles.css" type="text/css" />
+
+
+		<title>CSC207 Fall 2016 - Week 3, Lab 2</title>
+	</head>
+	<body>
+		<nav>
+
+    <div class="title">
+      <a href="http://axiom.utm.utoronto.ca/~207/16f/index.shtml"><h1>CSC207</h1></a>
+      <h2>UTM • Fall 2016</h2>
+    </div>
+    
+  <ul class="links">
+    <li><a href="http://axiom.utm.utoronto.ca/~207/16f/infosheet.pdf">Syllabus</a></li>
+    <li><a href="http://axiom.utm.utoronto.ca/~207/16f/lectures.shtml">Lectures and Labs</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/assignments.shtml">Assignments</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/tests.shtml">Tests</a></li>
+	<li><a href="http://axiom.utm.utoronto.ca/~207/16f/resources.shtml">Resources</a></li>
+</ul>
+
+</nav>
+<!--$Id:$-->
+
+		<div class="content">
+		
+				<h2>Lab 3 (Week 4) Advanced OO and Inheritance </h2>
+
+<h3>Notes</h3>
+		<ul>
+		<li> Please login and work on the lab systems!!
+		<li> Marks for the lab are for committing and pushing your work to the repo.
+		<li> During the lab, if you know what you are doing, and can help your neighbour, then help them. If you need help, ask us or your neighbour.
+		</ul>
+		
+		<h3>References</h3>
+		Lecture notes can be found here (cloning these onto the lab computers may make you exceed quota; clone these on your own machine. 
+		Or, clone them on lab computer, look at necessary files, then delete them and empty trash.):
+<xmp>
+Sadia:
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207prep.git
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0101.git
+
+Arnold 12-2
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0102.git
+
+Arnold 3-5
+git clone ssh://UTORID@cslinux.utm.utoronto.ca/student/cslec/207/207_L0103.git
+</xmp>
+
+		<h3>Setup and Submission</h3>
+
+			<li>Launch Eclipse Neon (if you see a blank screen, close the blank tab)
+			</li>
+			
+			<li>Switch to Git perspective (or Window &gt; Show View &gt; Other &gt; Git &gt; Git Repositories) to view a list
+			of all your git repositories in your Eclipse sidebar.</li>
+			<li>
+			Right click on your repo_UTORID.git repo and select "Pull" (if you don't have this directory, follow instructions under the "Git" and "Making Eclipse aware of your repo" from the 
+			<a href="http://axiom.utm.utoronto.ca/~207/16f/labs/02/">first lab</a>).</li>
+			<li>File &gt; Import &gt; Git &gt; Projects from git</li>
+			<li>Select "Existing local repository"</li>
+			<li>Select repo_UTORID</li>
+			<li>Select "Import existing Eclipse project" and from the dropdown, select LabWeek04 (<b>the <u>whole</u> directory; don't browse into it</b>). Select "Next", then "Finish"</li>
+			<li>Now switch to Java Perspective and work with the files in the LabWeek04 project</li>
+		<li>As you work on the lab, commit your changes as follows: Right-click LabWeek04, and select Team &gt; Add to Index (this is git add), then right-click again and select Team &gt; Commit.</li>
+		<li>In the "Git Staging" window, enter appropriate commit message, and then click the "Commit and Push" button.</li>
+	<strong><font color="red"><li>SUBMISSION: Remember to "Commit and Push" your project at the end of your lab so we can see the most updated version of your lab work.</li></font></strong>
+		</ul>
+	
+			<h3>1. Complete PlayWithShapes.java</h3>
+
+		<ul>
+      		<li> Follow the instructions within the comments written in the file <code>PlayWithShapes.java</code> to complete this class.
+      	</ul>
+		<h3>2. Inheriting from an Abstract Class</h3>
+		Take a look at the existing Rectangle and Circle classes. Create a Square class which inherits from <b>Rectangle</b>:
+		<ul>
+		<li>A Square is a Rectangle that has an (x, y) position, a color, and a width</li>
+		<li>This class should just have two constructors as follows:
+		<ul>
+		<li>By default (without any given arguments), a Square is created as blue, with width 10, and position (100, 100)</li>
+		<li>A Square can also be created with four arguments (String c, int width, int x, int y) that sets the color, width, and x,y values as the arguments given</li>
+		<li> Nothing to submit, just think about, whether it really makes sense to make Square a subclass of Rectangle. For some
+			help in thinking about this, take a look at this discussion of the <a href=http://stackoverflow.com/questions/56860/what-is-the-liskov-substitution-principle>Liskov Substitution Principle</a>.
+		</ul>
+		<!--<li>Play around to see if Square will need its own getters/setters. Does calling getWidth or getHeight on a Square already return the expected values? Why or why not?</li>
+		<li>How about a toString? Does it need its own toString?</li>-->
+		</ul>
+
+
+      	<h3>3. Work through UnderstandingInheritance.java</h3>
+<ul>
+		<li> Write comments in the file to describes all the methods that are called as a result of each line. For example...
+</ul><xmp>
+Square s=new Square();
+// The line above calls the Square() constructor
+// which executes this("blue", 10, 100, 100); which calls
+// the Square(String c, int width, int x, int y) constructor
+// which executes super(c, width, width, x, y); which calls ...
+// ... (complete this)
+</xmp>
+		</ul>
+		<div class="spacer"></div>
+	</body>
+</html>

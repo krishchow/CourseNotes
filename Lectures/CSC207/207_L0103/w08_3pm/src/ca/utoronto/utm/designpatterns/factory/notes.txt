@@ -1,0 +1,1 @@
+http://www.oodesign.com/factory-pattern.html
