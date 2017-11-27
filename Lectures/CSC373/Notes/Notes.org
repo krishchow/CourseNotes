@@ -357,7 +357,7 @@
 *** First Idea
     - Keep finding valid paths from s to t, send as much flow as possible, keep repeating this until no path remains
       - Return |f|
-      - Find a new path and send low, called augmenting path
+      - Find a new path and send flow, called augmenting path
       - Informally, Ford-Fulkerson Method
 ** Max-flow-Min-cut
    - FF is correct iff
@@ -473,3 +473,123 @@
           If after execution M_i has the highest load, consider the moment right before the greedy algorithm puts the final job k onto that machine M_i\\
           T_i is the load of M_i after execution, what's its load the moment before job j is added. T_i = S_j, at this moment, what's true about all other loads?
           - \sum_{k = 1}^m T_k \ge m(T_i - S_j)
+* Lecture Nine
+** From Last Time
+   - Load Balancing
+     Given m homogeneus machines, and n jobs, where job j has size s_j. 
+     "balance" the jobs as best you can across the machines. T_i \triangleq the total workload on machine i.
+     Makespan T - max(T_i), minimize the makespan
+     - IDEA
+       - Schedule the next job on the currently least loaded machine
+       - T* is the mnimum makespan
+         - $ T* \ge \frac{1}{m}\sum^{n}_{j = 1} s_j $
+         - T* \ge S_{max}
+** Makespan
+   - Let M_i be the machine with largest load T_i after the greedy algorithm executes
+   - Consider the moment before we schedule the last job to machine M_i 
+     - Let this be job j which has size s_j
+       \[ T_K \ge T_i - s_j \Rightarrow \sum^{n}_{k = 1} T_k \ge m(T_i - s_j) \]
+       \[ T_K \ge T_i - s_j \Rightarrow \frac{1}{m}\sum^{n}_{k = 1} T_k \]
+       \[ T_i - s_j \le \frac{1}{m}\sum^{n}_{k = 1} s_j \le T* \]
+       \[ \sum^{m}_{k = 1} T_k = \sum^{n}_{j = 1} s_j \]
+       \[ t_i = (T_i - s_j) + s_j \le 2T* \]
+   - Greedy algorithm isn't the best, we can get a 2/3 approximation. Order the jobs form largest to smallest
+** Greedy Approximation
+     #+BEGIN_SRC python
+       def GreedyKnapsack():
+         Sort(Items, order=dec)
+         for item in Items:
+           if item < capacity:
+             capacity += item.cap
+         # Let this solution be VG1
+         # Let solution VG2 be the value of the largest item which fits
+         return max(VG1, VG2)
+     #+END_SRC
+     - We can show this is a 2-appoximation algorithm
+       - We want to show V^G \ge $ \frac{1}{2} V* $
+       - Proof
+         Let k be the index of the item the algorithm does _NOT_ add.
+         What if I could include a fraction of the k^{th} item eg. 20 remaining\\
+         V_k = 100, W_k = 50; Take 20 weight worth of item k \rightarrow gives value 40
+         - Let this be the fractional solution v^F ( \ge V* )
+         \[ V^F = \sum^{k - 1}_{i = 1} v_i + cv_k, 0 \le c \le 1, \sum^{k - 1}_{i = 1} v_i \le V^{G1} \le V^G \]
+         \[ cv_K \le V^{G2} \le V^G \]
+** Travelling Salesman
+   - Given a graph G=(V, E) and a start vertex a \in V
+   - A path which strats at a, and visits all other verticies _exactly_ once and returns to a, is called a tour
+   - Find the shortest tour in a graph
+   - NP-Hard
+   - Assume G is dense, |E| = |V|^2
+   - Assume triange inequality ( w(a, c) \le w(a, b) + w(b, c) )
+*** MST solution
+    - Consider the optimal tour T*, let c(T*) = \sum_{e \in T*} w(e)
+    - What happens when I remove an edge from T*
+      - |V| edges in a tour
+      - Remove an edge \rightarrow the tour becomes a spanning tree
+        - c(MST) \le c(T*)
+    - Consider a "walk" W of the MST
+      - c(W) = 2 c(MST)
+* Lecture Ten
+** Randomized Algorithms
+   - Algorithm which uses/leverages randomness
+     - Vertex Cover
+*** Determining if a number is prime
+    1. Fermat's Little Thm:
+       - If P is a prime number then A^{p-1} mod p = 1
+       - This is true for all 0\le{}a\le{}p \in \mathbb{N} 
+       - If a^{p-1} mod p \ne 1, then p is composite
+       - However, \exists some composite numbers which also statisfy a^{p-1} mod p = 1
+       - \forall 0<a<p, if p is composite and a^{p-1} mod p = 1, then a is called a *fool/liar*
+    2. The number of fools between 0 and p is at most $$\frac{p}{2}$$
+       - P \Rightarrow [Gen a, 0<a<p] \Rightarrow [Check a^{p-1} mod p = 1]
+         - \Rightarrow [NO] \Rightarrow Not prime.
+         - \Rightarrow [YES] \Rightarrow [M times counter] \Rightarrow [Is it M times]
+           - \Rightarrow [NO] \Rightarrow Run it again
+           - \Rightarrow [YES] \Rightarrow It's prime
+       - P(a is a liar) \le 0.5
+         - P(comp is determined prime) = P(we gen m fools) \le 0.5^m
+*** 3-SAT
+    - Given a set of boolean variables X_1, X_2, ..., X_n and m clauses C_1, C_2, ..., C_m where each clause is a disjunction of 3 if the boolean variable or their negation.
+      - Find an instatiation of boolean vars such that the maximum # of clauses evaluate to true
+    - NP-Complete
+**** Example
+     - Bools {X_1, X_2, X_3}
+     - Clauses {(X_1 V \not{}X_2 V X_3), (\not{}X_1 V X_2 V \not{}X_3), (\not{}X_1 V \not{}X_2 V \not{}X_3), (X_1 V X_2 V X_3), (\not{}X_1 V X_2 V X_3) 
+       X_1 = True, X_2 = False, X_3 = False statisfied some, etc etc
+    1. Write an algorithm which returns a solution explected to be $$\ge{}\frac{7}{8}k*$$ is the optimal number of clauses
+    2. Write and algorithm which finds a solution $$\ge{}\frac{7}{8}k*$$ in expected polynomial time
+**** Idea
+     - Choose each boolean varibale with a 50/50 chance of being True/False
+     - Let X_i be a random variable such that X_i = {1, C_i is True; 0, C_i is False}
+     - Let X be a random variable which denotes the number of True clauses
+       \[ X = X_1 + X_2 + ... + X_m \]
+       \[ E(X) = E(X_1) + E(X_2) + ... + E(X_m) \]
+     - Can we find out the expected value of X_i? 
+       - $$ E(X_i) = P(C_i is True) = 1 - P(C_i is False) = 1 - (\frac{1}{2})^3 = \frac{7}{8} $$
+     - $$E(X) = mE(X_i) = m\frac{7}{8} \ge \frac{7}{8}k*$$
+     - Let p be the probability that our algorithm returns a solution $$\ge \frac{7}{8}k*$$
+     - The $$\frac{1}{p}$$ is the number of times we'd expect to run our algorithm before we find a solution.
+     - Let p_j be the probability an assignment has _exactly_ j true clauses
+     - $$E(X) = \frac{7}{8}m = \sum^{m}_{j = 1} jP_j$$
+       - Let m denote the largest natural number _strictly_ less then $$\frac{7}{8}m$$
+       \[ \frac{7}{8}m = \sum^{m'}_{j = 1} jP_j + \sum^{m}_{j = m + 1} jP_j \]
+       \[ \le \sum^{m'}_{j = 1} m'P_j + \sum^{m}_{j = 1} mP_j = m'\sum^{m'}_{j = 1} P_j + m\sum^{m}_{j = 1} P_j \]
+       \[ \frac{7}{8}m = m'(1 - p) + mp \]
+       \[ \frac{7}{8}m = m' + mp = \frac{\frac{7}{8}m - m'}{m} \le p \] 
+       \[ \Rightarrow \frac{\frac{1}{8}}{m} \le p \Rightarrow \frac{1}{p} \le 8m \]
+** Swarm Intelligence
+   - Ants are so stupid they are smart, but sometimes still very stupid
+** Exam Layout
+   - 7 Questions, 50 Marks
+   1. 10 T/F questions (Choose 7) [7 Marks]
+   2. Greedy, state and prove it [8 Marks]
+   3. Dynamic Programming [7 Marks]
+   4. Flow Network [6 Marks]
+   5. Flow Network Application [6 Marks]
+   6. Approximation [6 Marks]
+      - One of the problems we saw in lecture
+      - If we assume X and and not Y
+      - What do we take for granite
+        [[./granite.gif]]
+   7. Approximation Proof [10 Marks] 
+      - A\rightarrow{}B\rightarrow{}C
