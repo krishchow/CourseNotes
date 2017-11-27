@@ -589,7 +589,7 @@
    6. Approximation [6 Marks]
       - One of the problems we saw in lecture
       - If we assume X and and not Y
-      - What do we take for granite
+      - What do we take for granite\\
         [[./granite.gif]]
    7. Approximation Proof [10 Marks] 
       - A\rightarrow{}B\rightarrow{}C
