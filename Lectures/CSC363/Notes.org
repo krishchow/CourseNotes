@@ -519,4 +519,60 @@
       VertexCover' = { <G, k> | in G there is _not_ a Vertex Cover of size k or less }\\
       SubsetSum = { <S, t> | Every non-empty subset of S does not sum to t }
    - Does NP = co-NP?
-      
+     - Well, is P \subseteq Co-NP?
+       Yes. Assuming P \ne NP, we know of laguages that are in NP and co-NP, but not in P.
+   - What is the co-NP probem to SAT?
+     SAT' = { <\Phi> | \Phi cannot be satisfied }
+     - \Phi is a contradiction if it is always false
+       - Ex. x ^ x'
+     - \Phi is a tautology if it is always evaluates to true
+       - Ex. x v x'
+** Cook-Levin Thm - SAT is NP-Complete
+   - Show all NP problems reduce to SAT
+   - Show if a problem is decided by a n^k NTM then it can be reduced to SAT
+   - Config
+     x_{0}x_{1} .. x_{k-1}q_{i}x_{k}x_{k+1} ... x_{m}
+     - Create a TM with this on the tape, the head will be located at state q_i
+   - Let N = {Q, \sum, \Gamma, \delta, ... } be a n^k NTM
+     - Come up with a boolean formula \Phi which is satisfiable iff \exists a sequence of configurations which leads to an accept configuration
+   - There are n^{2k} cells
+     - Polynomial in n
+   - \delta, \sum, \Gamma, and Q are independent of n
+   - Let x_{i, j, c} be a boolean variable where
+     1) 1 \le i, j \le n^k 
+     2) c \in \Gamma U { # } U Q
+   - X_{i, j, c} is true if c is written in cell i, j
+     - eg, if x_{2, 3, q1} is true, q_1 is in cell 2, 3
+   - What if x_{i, j, a} and x_{i, j, b} were both true
+     \Phi = \Phi_{cell} ^ \Phi_{start} ^ \Phi_{accept} ^ \phi_{move}
+   - \Phi_{cell} = ^_{1 \le i, j \le n^k} (V_{c \in C} x_{i, j, c} ^ ^_{c_1, c_2 \in C and c_1 \ne c_2} ((x_{i, j, 2_1})' v (x_{i, j, c_2})'))
+   - \Phi_{start} = the first row is a valid start configuration
+     - \Phi_{start} = x_{1, 1, #} ^ x_{1, 2, q_start} ^ x_{1, 3, w_1} ^ x_{1, n+2, w_n} ^ x_{1, n+3, \Box} ^ x_{1, n^k + 3, #}
+   - \Phi_{accept} = One of the configurations is in the accept state
+     - \Phi_{accept} = V_{1 \le i, j \le n^k} x_{i, j, q_{accept}}
+   - \Phi_{move} = Each configuration legally follows from the last 
+     - There are multiple "legal" configurations
+     - For each cell, we can look at a "window"
+     - Let \delta(q_3, a) ...
+       - (q_3, b, R)
+       - (q_4, c, L)
+     - How many moves are there?
+       = |C|^6
+     - \Phi_{move} = ^_{1 \le i, j \le n^k} V_{a_1 ... a_6 is a legal window} (x_{i, j, a_1} ^ x_{i, j + 1, n_3} ^ ... ^ x_{i + 1, j, a_5} ^ x_{i - 1, j + 1, a_6})
+** The Exam
+   - April 16^th, 5 - 8pm
+   - Office Hours
+     - April 12^th and 14^th, 3-5
+   - Lots of reductions
+   - 7 Questions
+     1) 10 T/F, answer 7
+       - Anything
+     2 & 3) Computability
+       - What does it mean to be decidable/recognizable or some mapping reduction
+     4 - 7) Complexity
+       - Prove reduceability
+         - Vertex cover \le_p clique, etc
+       - Prove something in in NP, NP Hard, etc
+       - Ranging difficulty from trivial to hard
+  - No PDA material on the exam
+  - Study from assignments and lecture notes

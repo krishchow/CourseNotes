@@ -1,4 +1,4 @@
-% Created 2018-03-19 Mon 11:45
+% Created 2018-04-02 Mon 12:46
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -28,9 +28,9 @@
 \tableofcontents
 
 \section{Week 2}
-\label{sec:org9163c50}
+\label{sec:orgb885510}
 \subsection{Pushdown Automata (PDA)}
-\label{sec:org20c6ed0}
+\label{sec:org9df5681}
 \begin{itemize}
 \item L = \{ a\(^{\text{n}}\)b\(^{\text{n}}\) | n \(\ge\) 0 \}
 \item 7 tuple, M = (Q, \(\sum\), \(\Gamma\), \(\delta\), s, F, \(\perp\))
@@ -51,14 +51,14 @@ to state g, pop A off the stack and push B\(_{\text{k}}\)B\(_{\text{k-1}}\)\ldot
 \end{itemize}
 \end{itemize}
 \subsubsection{Example}
-\label{sec:org5b17cd4}
+\label{sec:org3d64562}
 \begin{itemize}
 \item Stage 1: Push A's
 \item Stage 2: Pop A's
 \item Stage 3: Are we accepting? (This mean B's and A's must be equal)
 \end{itemize}
 \subsubsection{More examples}
-\label{sec:orga644066}
+\label{sec:orgb55a850}
 \begin{itemize}
 \item a) L = \{ a\(^{\text{n}}\)b\(^{\text{n}}\)c\(^{\text{n}}\) | n \(\ge\) 0 \} (Impossible)
 \item b) L = \{ ww\(^{\text{R}}\) | w \(\in\) \(\sum\)* \} (Possible)
@@ -66,9 +66,9 @@ to state g, pop A off the stack and push B\(_{\text{k}}\)B\(_{\text{k-1}}\)\ldot
 \item d) L = \{ a\(^{\text{n}}\)b\(^{\text{m}}\)c\(^{\text{m}}\)d\(^{\text{n}}\) | n, m \(\ge\) 0 \} (Possible)
 \end{itemize}
 \subsection{Turing Machines (TM)}
-\label{sec:orgbfdddc5}
+\label{sec:org9d56bae}
 \subsubsection{What can't PDAs do?}
-\label{sec:orgfda6436}
+\label{sec:org1fd5861}
 \begin{itemize}
 \item Infinite memory, but it's not "perfect"
 \item What if we do have perfect/infinite memory
@@ -76,7 +76,7 @@ to state g, pop A off the stack and push B\(_{\text{k}}\)B\(_{\text{k-1}}\)\ldot
 \item How do we formally define it
 \end{itemize}
 \subsubsection{Definition}
-\label{sec:orgca50c36}
+\label{sec:org275e1ab}
 \begin{itemize}
 \item We'll say a TM is an 8-Tuple
 \item M = \{ Q, \(\sum\), \(\Gamma\), \(\delta\), s, qaccept, qreject, \square \}
@@ -102,7 +102,7 @@ to state g, pop A off the stack and push B\(_{\text{k}}\)B\(_{\text{k-1}}\)\ldot
 \end{itemize}
 \end{itemize}
 \subsubsection{Example}
-\label{sec:org635977f}
+\label{sec:orgb090561}
 \begin{itemize}
 \item Construct a TM M sich that L(M) = \{a\(^{\text{n}}\)b\(^{\text{n}}\)c\(^{\text{n}}\) | n \(\ge\) 0 \}
 \item Start by scanning the input from L to R to ensure it's of the form a*b*c*
@@ -111,9 +111,9 @@ to state g, pop A off the stack and push B\(_{\text{k}}\)B\(_{\text{k-1}}\)\ldot
 \item If at any time, you encouter a letter out of order, reject the input
 \end{itemize}
 \section{Week 3}
-\label{sec:orgc2cc5e1}
+\label{sec:org4494397}
 \subsection{Delta function layout}
-\label{sec:org76d6ef2}
+\label{sec:org810f222}
 (1, a, R) - Move to state 1, if its an A move right
 \begin{center}
 \begin{tabular}{rlllll}
@@ -134,16 +134,16 @@ S & (1, a, R) & Reject & Reject & / & Accept\\
 \end{tabular}
 \end{center}
 \subsection{Output Turing Machine}
-\label{sec:org5378a82}
+\label{sec:org619919e}
 \subsubsection{Example}
-\label{sec:orgb019ba1}
+\label{sec:orga784ae8}
 Let \(\sum\) = \{a\}. write a TM such that when M halts, the tape contains ww where w is the input. (Double the a's)
 \begin{itemize}
 \item a = aa
 \item aaa = aaaaaa
 \end{itemize}
 \subsection{Language of a Turing Machine}
-\label{sec:orgef5dfdf}
+\label{sec:org8cfeb7c}
 \begin{itemize}
 \item The collection or set of strings which M accepts L(M)
 \item A language L' is Turing-recognizable if \(\exists\) a Turing machine M, L'=L(M)
@@ -158,7 +158,7 @@ Let \(\sum\) = \{a\}. write a TM such that when M halts, the tape contains ww wh
 \end{itemize}
 \end{itemize}
 \subsubsection{Question}
-\label{sec:org8a66615}
+\label{sec:orgc2bdd9c}
 \begin{itemize}
 \item L is recognizable \(\Leftarrow\) L is decidable
 \item L is decidable \(\Rightarrow\) \(\forall\) turing machines M, such that L' = L(M) \(\Rightarrow\) if M is run on w \(\in\) L, M will halt? \textbf{NO}
@@ -168,26 +168,26 @@ Let \(\sum\) = \{a\}. write a TM such that when M halts, the tape contains ww wh
 \end{enumerate}
 \end{itemize}
 \subsection{Multi-tape Turing Machines}
-\label{sec:orga99c884}
+\label{sec:org0628775}
 \begin{itemize}
 \item Just like a classic TM, but it has k tapes
 \item \(\delta\): Q x \(\Gamma\) \(\rightarrow\) Q X \(\Gamma\) x \{L, R\} is replaced with \(\delta^{\text{k}}\): Q X \(\Gamma^{\text{k}}\) \(\rightarrow\) Q X \(\Gamma^{\text{k}}\) X \{L, R\}\(^{\text{k}}\)
 \end{itemize}
 \subsubsection{Show a single tape TM can simulate a multi-tape TM}
-\label{sec:org77ee174}
+\label{sec:orgbb24988}
 \begin{itemize}
 \item Encode multiple tapes on a single tape
 \end{itemize}
 \(\Gamma\) = \{a, b, \Box\} \(\rightarrow\) \(\Gamma\)' = \{a, b, a', b', \Box\}
 \subsection{Single infinite tape TM}
-\label{sec:orga71018a}
+\label{sec:org038b3e8}
 \begin{itemize}
 \item Same as a classic TM but infinite only in one direction
 \item Just add some left padding
 \item This is like a 2 tape TM, the 2nd tape is the 1st one flipped
 \end{itemize}
 \subsection{Enumerators}
-\label{sec:org6dfe615}
+\label{sec:orgfb2a7a1}
 \begin{itemize}
 \item 2 tapes and a control
 \begin{itemize}
@@ -211,14 +211,14 @@ Let \(\sum\) = \{a\}. write a TM such that when M halts, the tape contains ww wh
 \end{itemize}
 \end{itemize}
 \section{Week 4}
-\label{sec:orga312c06}
+\label{sec:org0f336ce}
 \begin{itemize}
 \item I slept\ldots{}
 \end{itemize}
 \section{Week 4 Tutorial}
-\label{sec:org1bd9600}
+\label{sec:org6d8553d}
 \subsection{Diagnolization to prove R does not map to N (Not countable)}
-\label{sec:org705afeb}
+\label{sec:org039f46b}
 \begin{itemize}
 \item d\(_{\text{11}}\)d\(_{\text{12}}\)d\(_{\text{13}}\)\ldots{}d\(_{\text{1n}}\)
 d\(_{\text{21}}\)\ldots{}\ldots{}..d\(_{\text{2n}}\)
@@ -227,7 +227,7 @@ d\(_{\text{n1}}\)\ldots{}\ldots{}..d\(_{\text{nn}}\)
 \item Construct e such that e\(_{\text{ii}}\) = (d\(_{\text{ii}}\) + 2) \% 10
 \end{itemize}
 \subsection{Proof that Eq\(_{\text{BFA}}\) = <(DFA1, DFA2); <(DFA1)=<(DFA2)>}
-\label{sec:org09f4b57}
+\label{sec:orgcd3bd49}
 \begin{itemize}
 \item 2\(\cdot\)L(DFA1) = L(DFA2) \(\Rightarrow\) (L(DF1) \intersect L(DFA2)) = \(\epsilon\)
 AND (L(DFA1) \intersect L(DFA2)) = \(\epsilon\)
@@ -245,9 +245,9 @@ AND (L(DFA1) \intersect L(DFA2)) = \(\epsilon\)
 \end{itemize}
 \end{itemize}
 \section{Week 5}
-\label{sec:org07c6160}
+\label{sec:org11aee03}
 \subsection{Continuing..}
-\label{sec:org5982687}
+\label{sec:orge1e7951}
 \begin{itemize}
 \item A\(_{\text{TM}}\) = \{M\#\(_{\text{W}}\) | M accepts w \}
 \begin{itemize}
@@ -313,9 +313,9 @@ P(P) = \{ accept is P rejects, reject if P accepts \}
 \end{itemize}
 \end{itemize}
 \subsection{Halting Problem}
-\label{sec:org2b04cb3}
+\label{sec:orgbc2d5ee}
 \subsubsection{Turings Method}
-\label{sec:orge0fbaca}
+\label{sec:org0f2269c}
 \begin{itemize}
 \item HP = \{ M\#\(_{\text{W}}\) | M halts, on W \}
 \item Thm: The halting problem is undecideable
@@ -337,7 +337,7 @@ P(w) = "on input w, construct M\(_{\text{w}}\) and we run D on M\(_{\text{w\#w}}
 \end{enumerate}
 \end{itemize}
 \subsubsection{Method 2}
-\label{sec:orgefb8c32}
+\label{sec:orgbfbf4fa}
 \begin{itemize}
 \item Assume HP is decideable
 \begin{itemize}
@@ -358,12 +358,12 @@ A\(_{\text{TM}}\) = \{ M\#\(_{\text{w}}\) | M accepts w \}
 Contradiction, \(\therefore\) HP is undecideable
 \end{itemize}
 \section{Week 6}
-\label{sec:org5aedea6}
+\label{sec:org263a355}
 \begin{itemize}
 \item Sick
 \end{itemize}
 \section{Week 7}
-\label{sec:org55a1c79}
+\label{sec:org52a2af6}
 \begin{itemize}
 \item Last Time
 \begin{itemize}
@@ -390,7 +390,7 @@ Contradiction, \(\therefore\) HP is undecideable
 \end{enumerate}
 \end{itemize}
 \subsection{Anything about the language is undecideable}
-\label{sec:orge5f70ee}
+\label{sec:org36be155}
 \begin{itemize}
 \item Let S denote the set of all languages
 \item Let a property P be a subset of S
@@ -410,7 +410,7 @@ Contradiction, \(\therefore\) HP is undecideable
 \end{itemize}
 \end{itemize}
 \subsection{Midterm}
-\label{sec:org62cf339}
+\label{sec:org51c4a55}
 \begin{itemize}
 \item Thursday March 1\(^{\text{st}}\), 6:00-8:00pm
 \item IB120
@@ -452,7 +452,7 @@ Contradiction, \(\therefore\) HP is undecideable
 \item A is undecideable and A is recognizable \(\rightarrow\) A' is unrecognizeable
 \end{itemize}
 \subsubsection{Past test, quesiton 7}
-\label{sec:org3990c38}
+\label{sec:org8f40c4a}
 \begin{itemize}
 \item L'' = \{ M : L(M) = L\(_{\text{L}}\) \}
 \item L\(_{\text{L}}\) = \{ O\(^{\text{n}}\)l\(^{\text{m}}\) | n < m \}
@@ -490,7 +490,7 @@ Contradiction, \(\therefore\) HP is undecideable
 \end{itemize}
 \end{itemize}
 \section{Week 8}
-\label{sec:org7dac399}
+\label{sec:orgfb9aea8}
 \begin{itemize}
 \item What can (or can't) camputers do (effectivness)
 \item So something using (relatively) little resources
@@ -499,14 +499,14 @@ Contradiction, \(\therefore\) HP is undecideable
 \end{itemize}
 \end{itemize}
 \subsection{Moving Forward}
-\label{sec:orgb49512e}
+\label{sec:org0d38eb9}
 \begin{itemize}
 \item Look at low level TM
 \item Compare Models
 \item Classify problems / Heirachy - Reductions
 \end{itemize}
 \subsection{The Lecture}
-\label{sec:org49f8ac3}
+\label{sec:orgc164e8f}
 \begin{itemize}
 \item Def
 Let M be a total deterministic TM, the time complexity of M is a function f:N \(\rightarrow\) N, f(n) is the max number of steps M
@@ -570,7 +570,7 @@ P is the class of languages that are decideable in polynomial time on a determin
 \end{itemize}
 \end{itemize}
 \section{Week 9}
-\label{sec:orgf59edb8}
+\label{sec:org3d098ac}
 \begin{itemize}
 \item All deterministic computational models are polynomial equivalent
 \begin{itemize}
@@ -578,7 +578,7 @@ P is the class of languages that are decideable in polynomial time on a determin
 \end{itemize}
 \end{itemize}
 \subsection{Example}
-\label{sec:orgf5a6317}
+\label{sec:org1a1994f}
 PATH = \{ <G, s, t> | There's a path from s to t in G \}
 \begin{itemize}
 \item Theorem
@@ -600,7 +600,7 @@ M(G, s, t) =
 \end{itemize}
 \end{itemize}
 \subsection{Example}
-\label{sec:orgdc6ccdb}
+\label{sec:orgd05e00f}
 HPATH = \{ <G, s, t> | there's a Hamiltonian path from s to t \}
 \begin{itemize}
 \item Def
@@ -619,7 +619,7 @@ NP is the class of languages which have polynomial time verifiers
 A language is in NP iff it is decided by some polynomial time NTM
 \end{itemize}
 \subsection{Question}
-\label{sec:org853a3dc}
+\label{sec:org8573f9c}
 If a language is in P, it is also in NP?
 \begin{itemize}
 \item Def One
@@ -633,13 +633,13 @@ If a language is in P, it is also in NP?
 \end{itemize}
 \end{itemize}
 \subsection{Question}
-\label{sec:orgd2687e3}
+\label{sec:org0b937cf}
 If a language is in NP, it is also in P?
 \begin{itemize}
 \item Well this is the P = NP problem. We know sometimes, not if it is always.
 \end{itemize}
 \subsection{Complexity Reductions}
-\label{sec:org1aad090}
+\label{sec:orgb09205f}
 \begin{itemize}
 \item Def
 Language A is a polynomial time reduceable to language B, A \(\le_{\text{p}}\) B, if \(\exists\) a polynomial time computable function f, 
@@ -674,9 +674,9 @@ If A \(\le_{\text{p}}\) B and A \(\notin\) P, then B \(\notin\) P
 \end{itemize}
 \end{itemize}
 \section{Week 10}
-\label{sec:orge06c4de}
+\label{sec:org8575b47}
 \subsection{From last time}
-\label{sec:org5e61a02}
+\label{sec:orgea3cb25}
 \begin{itemize}
 \item A \(\le_{\text{p}}\) B
 \begin{itemize}
@@ -685,7 +685,7 @@ If A \(\le_{\text{p}}\) B and A \(\notin\) P, then B \(\notin\) P
 \end{itemize}
 \end{itemize}
 \subsection{Toolbox of problems}
-\label{sec:orga9c8542}
+\label{sec:orgfa25590}
 \begin{itemize}
 \item Vertex Cover
 Given a graph G=(V, E), a Vertex Cover, C, is a set of verticies such that \(\forall\)(v\(_{\text{1}}\), v\(_{\text{2}}\))\(\in\) E, v\(_{\text{1}}\) \(\in\) C, v\(_{\text{2}}\) \(\in\) C\\
@@ -710,6 +710,287 @@ IS(G, K) = call VertexCoverSol(G, |V|-k)
 \end{itemize}
 \item Clique
 Given a graph G=(V, E), a cliquw of the graph is a set S such that S\subseteq{}V and \(\forall\) v\(_{\text{1}}\), v\(_{\text{2}}\) \(\in\) S, 
-(v\(_{\text{1}}\), v\(_{\text{2}}\)) \(\in\) E or v\(_{\text{1}}\) = v\(_{\text{2}}\).
+(v\(_{\text{1}}\), v\(_{\text{2}}\)) \(\in\) E or v\(_{\text{1}}\) = v\(_{\text{2}}\).\\
+Clique = \{(G, K) | G has a clique of size k or more \}
+\begin{itemize}
+\item Prove: Vertex cover \(\le_{\text{p}}\) Clique
+Let the complement of G=(V, E) be G'=(V, E') where E' = \{(v\(_{\text{1}}\), v\(_{\text{2}}\)): v\(_{\text{1}}\), v\(_{\text{2}}\) \(\in\) V and v\(_{\text{1}}\) \(\ne\) v\(_{\text{2}}\) and (v\(_{\text{1}}\), v\(_{\text{2}}\)) \(\notin\) E \}\\
+Suppose G' has a clique S\subseteq{}V where |S| = |V|-k. Let (v\(_{\text{1}}\), v\(_{\text{2}}\)) be an edge in E, then (v\(_{\text{1}}\), v\(_{\text{2}}\)) \(\notin\) E', then 
+one of v\(_{\text{1}}\) or v\(_{\text{2}}\) is not in S (otherwise S is no a clique in G')
+\(\Rightarrow\) At least one one of v\(_{\text{1}}\) or v\(_{\text{2}}\) are in V-S
+\(\Rightarrow\) (v\(_{\text{1}}\), v\(_{\text{2}}\)) is covered by V-S
+\(\Rightarrow\) All edge \(\in\) E are covered by V-S
+\(\Rightarrow\) V-S is a Vertex Cover
+VC(G, K) = \ldots{}
+\begin{itemize}
+\item Create G \(\leftarrow\) Polynomial time
+\item Call Clique(G', |V| - k)
+\begin{itemize}
+\item yes \(\rightarrow\) yes
+\item no \(\rightarrow\) no
+\end{itemize}
+\end{itemize}
+\item Prove: Clique \(\le_{\text{p}}\) Independent Set
+\begin{enumerate}
+\item Consider an independent set I in G'. Then in G, I is a clique
+IS \(\le_{\text{p}}\) Vc \(\le_{\text{p}}\) Clique \(\le_{\text{p}}\) IS
+\end{enumerate}
+\end{itemize}
+\end{itemize}
+\subsection{Hardest NP Problem? H}
+\label{sec:org8c02576}
+\begin{itemize}
+\item \(\forall\) A\(\in\)NP, A \(\le_{\text{p}}\) H
+\item Def
+A lanuage B in NP-Complete if it statisfies two conditions
+\begin{itemize}
+\item B is in NP
+\item \(\forall\) A\(\in\) NP, A \(\le_{\text{p}}\) B
+\end{itemize}
+\item Corollary
+If A in NP-Complete and A \(\le_{\text{p}}\) B and B is in NP then B is NP-Complete
+\item How to prove B is NP-Complete
+\begin{itemize}
+\item Prove B in NP
+\item Choose an appropriate NP-Complete problem A and show A \(\le_{\text{p}}\) B
+\end{itemize}
+\item Example
+SAT = \{ <\(\diamondsuit\)> | \(\diamondsuit\) is a satisfiable boolean formula \}
+\begin{itemize}
+\item EX
+x V y \(\in\) SAT\\
+x \^{} x' \(\notin\) SAT\\
+\item Cook-Levin Them
+SAT is NP-Complete, or SAT \(\in\) P iff P=NP
+3SAT = \{ <\(\diamondsuit\)> | \(\diamondsuit\) is a satisfiable 3cnf boolean formula \}
+Ex: (x\(_{\text{1}}\) v x\(_{\text{2}}\) v x\(_{\text{3}}\)) \^{} (x'\(_{\text{1}}\) v x\(_{\text{4}}\) v x'\(_{\text{3}}\)) \^{} \ldots{} \^{} (x'\(_{\text{1}}\) v x'\(_{\text{10}}\) v x\(_{\text{14}}\))
+3SAT is NP-Complete
+Circuit SAT is NP-Complete
+\item Prove Independent Set is NP-Complete
+3SAT \(\le_{\text{p}}\) Independent Set
+\end{itemize}
+\end{itemize}
+\section{Week 11}
+\label{sec:org8f285a3}
+\subsection{Last Time}
+\label{sec:org2913b82}
+\begin{itemize}
+\item NP Complete Problems
+\begin{itemize}
+\item B is in NP
+\item Find a NP-Complete language A and show A \(\le_{\text{p}}\) B
+\end{itemize}
+\item Thm: 3SAT is NP-Complete
+\item Thm: 3SAT \(\le_{\text{p}}\) Independent Set
+\end{itemize}
+\subsection{Subset Sum}
+\label{sec:org9a18b1f}
+\begin{itemize}
+\item Def
+Subset-Sum = \{ <S, t> | There exists a subset of S which sums exactly to t \}
+\begin{itemize}
+\item Ex
+(\{1, 4, 6, 2, 3\}, 13) \(\in\) Subset-Sum\\
+(\{1, 4, 6, 2, 3\}, 17) \(\notin\) Subset-Sum
+\end{itemize}
+\item Thm: Subset-Sum is NP-Complete
+\item Def
+Partition =  \{ <S> | S can be split into two equal subsets \}
+\item Partition \(\le_{\text{p}}\) SubsetSum
+\item Thm: SubsetSum \(\le_{\text{p}}\) Partition
+\begin{itemize}
+\item Given an instance of SubsetSum S, t, create a new set S', where
+s is the sum of al values of S and S' = S U \{s - 2t\}
+\begin{enumerate}
+\item \(\exists\) a subset of S which sums to t, then there's a partition in S'
+\item if there's a partition in S' there's a subet sum S, t
+\end{enumerate}
+\end{itemize}
+\item Proof
+\begin{enumerate}
+\item Whats the sum of S'
+\begin{itemize}
+\item s + s - 2t
+\item s2 - st
+\item 2(s - t)
+\end{itemize}
+\end{enumerate}
+\end{itemize}
+\subsection{Knapsack Problem}
+\label{sec:orgb1c2d1e}
+\begin{itemize}
+\item Def
+\begin{enumerate}
+\item Given a set of items I = \{(w\(_{\text{1}}\), v\(_{\text{2}}\)), (w\(_{\text{2}}\), v\(_{\text{2}}\)) \ldots{} (w\(_{\text{n}}\), v\(_{\text{n}}\))\}
+\item A max capacity C
+\item 2 possible goals
+\begin{itemize}
+\item Maximize your value
+\item Achieve a total value of at least V
+\begin{itemize}
+\item Find an S \(\subseteq\) I, \(\sum_{\text{w}_{\text{i}} \ \in\ \text{S}}\)w\(_{\text{i}}\) \(\le\) C and \(\sum_{\text{w}_{\text{i}} \ \in\ \text{S}}\)v\(_{\text{i}}\) \(\ge\) V
+\end{itemize}
+\end{itemize}
+\item Formal Def
+Knapsack = \{ <I, C, V> | there exists a subset of items with at least total value \(\ge\) V and total weight \(\le\) C \}
+\end{enumerate}
+\item Thm
+Knapsack is NP-Complete
+\begin{itemize}
+\item Find an A such that A \(\le_{\text{p}}\) knapsack
+\begin{itemize}
+\item Partition \(\le_{\text{p}}\) Knapsack
+\item Given a set S = \{a\(_{\text{1}}\), a\(_{\text{2}}\), \ldots{} a\(_{\text{n}}\)\}
+\begin{enumerate}
+\item I = \{ (a\(_{\text{1}}\) a\(_{\text{1}}\)), (a\(_{\text{2}}\), a\(_{\text{2}}\)) \ldots{}. (a\(_{\text{n}}\), a\(_{\text{n}}\)) \}
+\item C = \frac{1}{2} \(\sum_{\text{a }\in\ \text{S}}\)a and V = \frac{1}{2} \(\sum_{\text{a }\in\ \text{S}}\)a
+\end{enumerate}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{NP-Hard}
+\label{sec:orgb8c8e2c}
+\begin{itemize}
+\item Def
+A language/problem H is said to be NP-Hard if \(\forall\) L \(\in\) NP, L \(\le_{\text{p}}\) H
+\item Prove H is NP-Hard
+Show any NP-Complete problem reduces to H
+\begin{itemize}
+\item KnapsackMax = \{ <I, C, V> | V is the max value one can achieve \}
+\end{itemize}
+\item Thm: HP is NP-Hard
+\item Proof: 3SAT \(\le_{\text{p}}\) HP
+\begin{enumerate}
+\item Construct a TM S, which takes as input a boolean formula and brute force checks every possible configuration.
+\begin{itemize}
+\item Can be constructed in polynomial time
+\end{itemize}
+1.1) If it find a valid instatiation
+\begin{itemize}
+\item Accept (halt)
+\end{itemize}
+1.2) If it does not 
+\begin{itemize}
+\item Loop
+\end{itemize}
+\begin{itemize}
+\item Given \(\Phi\) call HPsol(S\#\(\Phi\))
+\end{itemize}
+\end{enumerate}
+\end{itemize}
+\section{Week 12}
+\label{sec:orgf070753}
+\subsection{Co-NP}
+\label{sec:org503b5d5}
+\begin{itemize}
+\item Def
+If L is NP, then L' is co-NP
+\item Examples
+VertexCover' = \{ <G, k> | in G there is \uline{not} a Vertex Cover of size k or less \}\\
+SubsetSum = \{ <S, t> | Every non-empty subset of S does not sum to t \}
+\item Does NP = co-NP?
+\begin{itemize}
+\item Well, is P \subseteq Co-NP?
+Yes. Assuming P \(\ne\) NP, we know of laguages that are in NP and co-NP, but not in P.
+\end{itemize}
+\item What is the co-NP probem to SAT?
+SAT' = \{ <\(\Phi\)> | \(\Phi\) cannot be satisfied \}
+\begin{itemize}
+\item \(\Phi\) is a contradiction if it is always false
+\begin{itemize}
+\item Ex. x \^{} x'
+\end{itemize}
+\item \(\Phi\) is a tautology if it is always evaluates to true
+\begin{itemize}
+\item Ex. x v x'
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Cook-Levin Thm - SAT is NP-Complete}
+\label{sec:org9f9ae1b}
+\begin{itemize}
+\item Show all NP problems reduce to SAT
+\item Show if a problem is decided by a n\(^{\text{k}}\) NTM then it can be reduced to SAT
+\item Config
+x\(_{\text{0}}\)x\(_{\text{1}}\) .. x\(_{\text{k-1}}\)q\(_{\text{i}}\)x\(_{\text{k}}\)x\(_{\text{k+1}}\) \ldots{} x\(_{\text{m}}\)
+\begin{itemize}
+\item Create a TM with this on the tape, the head will be located at state q\(_{\text{i}}\)
+\end{itemize}
+\item Let N = \{Q, \(\sum\), \(\Gamma\), \(\delta\), \ldots{} \} be a n\(^{\text{k}}\) NTM
+\begin{itemize}
+\item Come up with a boolean formula \(\Phi\) which is satisfiable iff \(\exists\) a sequence of configurations which leads to an accept configuration
+\end{itemize}
+\item There are n\(^{\text{2k}}\) cells
+\begin{itemize}
+\item Polynomial in n
+\end{itemize}
+\item \(\delta\), \(\sum\), \(\Gamma\), and Q are independent of n
+\item Let x\(_{\text{i, j, c}}\) be a boolean variable where
+\begin{enumerate}
+\item 1 \(\le\) i, j \(\le\) n\(^{\text{k}}\)
+\item c \(\in\) \(\Gamma\) U \{ \# \} U Q
+\end{enumerate}
+\item X\(_{\text{i, j, c}}\) is true if c is written in cell i, j
+\begin{itemize}
+\item eg, if x\(_{\text{2, 3, q1}}\) is true, q\(_{\text{1}}\) is in cell 2, 3
+\end{itemize}
+\item What if x\(_{\text{i, j, a}}\) and x\(_{\text{i, j, b}}\) were both true
+\(\Phi\) = \(\Phi_{\text{cell}}\) \^{} \(\Phi_{\text{start}}\) \^{} \(\Phi_{\text{accept}}\) \^{} \(\phi_{\text{move}}\)
+\item \(\Phi_{\text{cell}}\) = \^{}\(_{\text{1 }\le\ \text{i, j }\le\ \text{n}^{\text{k}}}\) (V\(_{\text{c }\in\ \text{C}}\) x\(_{\text{i, j, c}}\) \^{} \^{}\(_{\text{c}_{\text{1}}\text{, c}_{\text{2}} \ \in\ \text{C and c}_{\text{1}} \ \ne\ \text{c}_{\text{2}}}\) ((x\(_{\text{i, j, 2}_{\text{1}}}\))' v (x\(_{\text{i, j, c}_{\text{2}}}\))'))
+\item \(\Phi_{\text{start}}\) = the first row is a valid start configuration
+\begin{itemize}
+\item \(\Phi_{\text{start}}\) = x\(_{\text{1, 1, \#}}\) \^{} x\(_{\text{1, 2, q}_{\text{start}}}\) \^{} x\(_{\text{1, 3, w}_{\text{1}}}\) \^{} x\(_{\text{1, n+2, w}_{\text{n}}}\) \^{} x\(_{\text{1, n+3, }\Box}\) \^{} x\(_{\text{1, n}^{\text{k}} \ \text{+ 3, \#}}\)
+\end{itemize}
+\item \(\Phi_{\text{accept}}\) = One of the configurations is in the accept state
+\begin{itemize}
+\item \(\Phi_{\text{accept}}\) = V\(_{\text{1 }\le\ \text{i, j }\le\ \text{n}^{\text{k}}}\) x\(_{\text{i, j, q}_{\text{accept}}}\)
+\end{itemize}
+\item \(\Phi_{\text{move}}\) = Each configuration legally follows from the last 
+\begin{itemize}
+\item There are multiple "legal" configurations
+\item For each cell, we can look at a "window"
+\item Let \(\delta\)(q\(_{\text{3}}\), a) \ldots{}
+\begin{itemize}
+\item (q\(_{\text{3}}\), b, R)
+\item (q\(_{\text{4}}\), c, L)
+\end{itemize}
+\item How many moves are there?
+= |C|\(^{\text{6}}\)
+\item \(\Phi_{\text{move}}\) = \^{}\(_{\text{1 }\le\ \text{i, j }\le\ \text{n}^{\text{k}}}\) V\(_{\text{a}_{\text{1}} \ \text{\ldots{} a}_{\text{6}} \ \text{is a legal window}}\) (x\(_{\text{i, j, a}_{\text{1}}}\) \^{} x\(_{\text{i, j + 1, n}_{\text{3}}}\) \^{} \ldots{} \^{} x\(_{\text{i + 1, j, a}_{\text{5}}}\) \^{} x\(_{\text{i - 1, j + 1, a}_{\text{6}}}\))
+\end{itemize}
+\end{itemize}
+\subsection{The Exam}
+\label{sec:orgf48b917}
+\begin{itemize}
+\item April 16\(^{\text{th}}\), 5 - 8pm
+\item Office Hours
+\begin{itemize}
+\item April 12\(^{\text{th}}\) and 14\(^{\text{th}}\), 3-5
+\end{itemize}
+\item Lots of reductions
+\item 7 Questions
+\begin{enumerate}
+\item 10 T/F, answer 7
+\begin{itemize}
+\item Anything
+\end{itemize}
+\end{enumerate}
+2 \& 3) Computability
+\begin{itemize}
+\item What does it mean to be decidable/recognizable or some mapping reduction
+\end{itemize}
+4 - 7) Complexity
+\begin{itemize}
+\item Prove reduceability
+\begin{itemize}
+\item Vertex cover \(\le_{\text{p}}\) clique, etc
+\end{itemize}
+\item Prove something in in NP, NP Hard, etc
+\item Ranging difficulty from trivial to hard
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+\item No PDA material on the exam
+\item Study from assignments and lecture notes
 \end{itemize}
 \end{document}
