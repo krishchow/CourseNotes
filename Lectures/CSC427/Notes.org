@@ -1,0 +1,37 @@
+* Lecture 3
+** RSA
+   - RSA Thm
+     Let p, q be primes, m such that gcd (m, pq) = 1 \Rightarrow m^{(p-1)(q-1)} % p\cdot{}q = 1
+   - How to use
+     Say we have e, d such that gcd (e\cdot{}d, (p-1)(q-1)) = 1
+   - Euclidean Alg
+     - gcd(6, 15) = 3
+       - \exists a, v, \in N such that \delta = 6a, 15b
+       - 15 = 6\cdot{}2 + 3
+       - 15 - 6\cdot{}2 = 3
+     - gcd(101, 37) = 1
+       - \exists a, b such that 1 = 10\cdot{}a + 37\cdot{}b
+       - 101 = 37\cdot{}2 + 27
+       - 37 = 27\cdot{} 1 + 10
+       - 27 = 10\cdot{}2 + 7
+       - 10 = 7\cdot{}1 + 3
+       - 7 = 3\cdot{}2 + 1 (GCD is 1)
+       - 3 = 1\cdot{}3 + 0
+      - Definition
+        \forall p, q \in N, \exists a, b \in Z such that ap + bq = gcd(p, q)
+    - How to use RSA Thm
+      - Say we have e such that gcd(e, (p-1)(q-1)) = 1
+      - By EA, \exists d, k such that e\cdot{}d + k(p-1)(q-1) = 1
+      - Take message m such that gcd(m, pq) = 1 (m \notin {p, q, 2p, 2q, 3p, 3q, ..., pq})
+        - Encrypt c = m^e % pq
+        - Decrypt (m^e)^d % pq
+          - m^{1 - k(p-1)(q-1)} % pq
+          - m \cdot{} m^{k(p-1)(q-1)} % pq
+          - m^1 \cdot (m^{(p-1)(q-1)})^k % pq
+          - ((m^1 % pq) \cdot ((m^{(p-1)(q-1)} % pq)^k 
+     - Rough Steps
+       1) p, q large primes
+       2) Find e such that gcd(e, (p-1)(q-1)) = 1
+       3) Find d such that e\cdot{}d = 1 + k(p-1)(q-1)
+          - Public Key = (e, p\cdot{}q)
+          - Private Key = (d, p\cdot{}q)

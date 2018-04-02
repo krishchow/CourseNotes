@@ -1,0 +1,715 @@
+% Created 2018-03-19 Mon 11:45
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.0.50 (Org mode 9.1.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\section{Week 2}
+\label{sec:org9163c50}
+\subsection{Pushdown Automata (PDA)}
+\label{sec:org20c6ed0}
+\begin{itemize}
+\item L = \{ a\(^{\text{n}}\)b\(^{\text{n}}\) | n \(\ge\) 0 \}
+\item 7 tuple, M = (Q, \(\sum\), \(\Gamma\), \(\delta\), s, F, \(\perp\))
+\begin{itemize}
+\item Q: Finite set of states
+\item \(\sum\): Finite input alphabet
+\item \(\Gamma\): finite stack alphabet
+\item \(\delta\): transitions
+\item \(\perp\) \(\in\) \(\Gamma\)
+\item S \(\in\) Q
+\item F \subseteq Q
+\end{itemize}
+
+\item \(\delta\) \subseteq (Q x (\(\sum\) U \{\(\epsilon\)\} x \(\Gamma\)) x (Q x \(\Gamma\)*)((p, a, A), (g, B\(_{\text{1}}\)B\(_{\text{2}}\)\ldots{}B\(_{\text{k}}\))
+\begin{itemize}
+\item When in state p, reading in "a", and A is on top of the stack, the machine \uline{may} move
+to state g, pop A off the stack and push B\(_{\text{k}}\)B\(_{\text{k-1}}\)\ldots{}B\(_{\text{1}}\) (B\(_{\text{1}}\) is now on the stop of the stack.)
+\end{itemize}
+\end{itemize}
+\subsubsection{Example}
+\label{sec:org5b17cd4}
+\begin{itemize}
+\item Stage 1: Push A's
+\item Stage 2: Pop A's
+\item Stage 3: Are we accepting? (This mean B's and A's must be equal)
+\end{itemize}
+\subsubsection{More examples}
+\label{sec:orga644066}
+\begin{itemize}
+\item a) L = \{ a\(^{\text{n}}\)b\(^{\text{n}}\)c\(^{\text{n}}\) | n \(\ge\) 0 \} (Impossible)
+\item b) L = \{ ww\(^{\text{R}}\) | w \(\in\) \(\sum\)* \} (Possible)
+\item c) L = \{ ww | w \(\in\) \(\sum\)* \} (Impossible)
+\item d) L = \{ a\(^{\text{n}}\)b\(^{\text{m}}\)c\(^{\text{m}}\)d\(^{\text{n}}\) | n, m \(\ge\) 0 \} (Possible)
+\end{itemize}
+\subsection{Turing Machines (TM)}
+\label{sec:orgbfdddc5}
+\subsubsection{What can't PDAs do?}
+\label{sec:orgfda6436}
+\begin{itemize}
+\item Infinite memory, but it's not "perfect"
+\item What if we do have perfect/infinite memory
+\item Does this allow for more accepted languages
+\item How do we formally define it
+\end{itemize}
+\subsubsection{Definition}
+\label{sec:orgca50c36}
+\begin{itemize}
+\item We'll say a TM is an 8-Tuple
+\item M = \{ Q, \(\sum\), \(\Gamma\), \(\delta\), s, qaccept, qreject, \square \}
+\begin{itemize}
+\item qaccept \(\in\) Q
+\item qreject \(\in\) Q
+\item qaccept \(\ne\) qreject
+\item \square \(\in\) \(\Gamma\)
+\item \(\sum\) \subseteq \(\Gamma\) - \{ \square \}
+\item \(\delta\): Qx\(\Gamma\) \(\rightarrow\) Q x \(\Gamma\) x \{L, R\}
+\item \(\delta\)(g\(_{\text{1}}\), a) = (g\(_{\text{2}}\), b, R)
+\begin{itemize}
+\item If I am in g\(_{\text{1}}\) and it is an a, write a b and move right
+\end{itemize}
+\end{itemize}
+\item Input is initally written on the tape
+\item If at any point the TM enters state qaccept, it stops (halts) and accepts the input
+\item If at any point the TM enters state qreject, it stops (halts) and rejects the input
+\item Can be used as language accepters, or as output machines
+\item Does all input get accepted or rejected?
+\begin{itemize}
+\item No, it can loop
+\end{itemize}
+\end{itemize}
+\subsubsection{Example}
+\label{sec:org635977f}
+\begin{itemize}
+\item Construct a TM M sich that L(M) = \{a\(^{\text{n}}\)b\(^{\text{n}}\)c\(^{\text{n}}\) | n \(\ge\) 0 \}
+\item Start by scanning the input from L to R to ensure it's of the form a*b*c*
+\item Scan from R to L, overwrite exactly one c, b, the a with a special character
+\item Scan from L to R, overwrite exactly one a, b, then c repeat 2)
+\item If at any time, you encouter a letter out of order, reject the input
+\end{itemize}
+\section{Week 3}
+\label{sec:orgc2cc5e1}
+\subsection{Delta function layout}
+\label{sec:org76d6ef2}
+(1, a, R) - Move to state 1, if its an A move right
+\begin{center}
+\begin{tabular}{rlllll}
+ & a & b & c & - & \Box\\
+\hline
+S & (1, a, R) & Reject & Reject & / & Accept\\
+1 & (1, a, R) & (2, b, R) & Reject & / & Reject\\
+2 & Reject & (2, b, R) & (3, c, R) & / & Reject\\
+3 & Reject & Reject & (3, c, R) & / & (4, \Box, L)\\
+4 & Reject & Reject & (5, -, L) & (4, -, L) & Accept\\
+5 &  &  &  &  & \\
+6 &  &  &  &  & \\
+7 &  &  &  &  & \\
+8 &  &  &  &  & \\
+9 &  &  &  &  & \\
+10 &  &  &  &  & \\
+11 &  &  &  &  & \\
+\end{tabular}
+\end{center}
+\subsection{Output Turing Machine}
+\label{sec:org5378a82}
+\subsubsection{Example}
+\label{sec:orgb019ba1}
+Let \(\sum\) = \{a\}. write a TM such that when M halts, the tape contains ww where w is the input. (Double the a's)
+\begin{itemize}
+\item a = aa
+\item aaa = aaaaaa
+\end{itemize}
+\subsection{Language of a Turing Machine}
+\label{sec:orgef5dfdf}
+\begin{itemize}
+\item The collection or set of strings which M accepts L(M)
+\item A language L' is Turing-recognizable if \(\exists\) a Turing machine M, L'=L(M)
+\begin{itemize}
+\item w \(\in\) L' \(\Rightarrow\) if we run M on w, it accepts w
+\item w \(\notin\) L' \(\Rightarrow\) if we run M on w, it rejects or infinite loops
+\end{itemize}
+\item A language L\(^{\text{-}}\) is Turing Decidable if \(\exists\) a TM, M sich L\(^{\text{-}}\) = L(M) and M halts on all input
+\begin{itemize}
+\item w \(\in\) L\(^{\text{-}}\) \(\Rightarrow\) running M on w accepts
+\item w \(\notin\) L\(^{\text{-}}\) \(\Rightarrow\) running M on w rejects
+\end{itemize}
+\end{itemize}
+\subsubsection{Question}
+\label{sec:org8a66615}
+\begin{itemize}
+\item L is recognizable \(\Leftarrow\) L is decidable
+\item L is decidable \(\Rightarrow\) \(\forall\) turing machines M, such that L' = L(M) \(\Rightarrow\) if M is run on w \(\in\) L, M will halt? \textbf{NO}
+\begin{enumerate}
+\item Let M be a TM which decided L'
+\item Make a new TM, M', which mimics M except when M rejects, M' will loop
+\end{enumerate}
+\end{itemize}
+\subsection{Multi-tape Turing Machines}
+\label{sec:orga99c884}
+\begin{itemize}
+\item Just like a classic TM, but it has k tapes
+\item \(\delta\): Q x \(\Gamma\) \(\rightarrow\) Q X \(\Gamma\) x \{L, R\} is replaced with \(\delta^{\text{k}}\): Q X \(\Gamma^{\text{k}}\) \(\rightarrow\) Q X \(\Gamma^{\text{k}}\) X \{L, R\}\(^{\text{k}}\)
+\end{itemize}
+\subsubsection{Show a single tape TM can simulate a multi-tape TM}
+\label{sec:org77ee174}
+\begin{itemize}
+\item Encode multiple tapes on a single tape
+\end{itemize}
+\(\Gamma\) = \{a, b, \Box\} \(\rightarrow\) \(\Gamma\)' = \{a, b, a', b', \Box\}
+\subsection{Single infinite tape TM}
+\label{sec:orga71018a}
+\begin{itemize}
+\item Same as a classic TM but infinite only in one direction
+\item Just add some left padding
+\item This is like a 2 tape TM, the 2nd tape is the 1st one flipped
+\end{itemize}
+\subsection{Enumerators}
+\label{sec:org6dfe615}
+\begin{itemize}
+\item 2 tapes and a control
+\begin{itemize}
+\item Control has the output tape with the following conditions
+\begin{itemize}
+\item Write Only
+\item Tape alphabet = \(\sum\)
+\item Only works to the right
+\end{itemize}
+\item Control has the work tape with the following confitions
+\begin{itemize}
+\item read/write
+\item Basically a TM
+\item No accept or reject states
+\item Enumerate state
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+\item Whenever the control reaches the enumerate state, it prints out whatever is on the output tape and clears it
+\item L(E\_ is the set of strings which W will eventually print out
+\end{itemize}
+\end{itemize}
+\section{Week 4}
+\label{sec:orga312c06}
+\begin{itemize}
+\item I slept\ldots{}
+\end{itemize}
+\section{Week 4 Tutorial}
+\label{sec:org1bd9600}
+\subsection{Diagnolization to prove R does not map to N (Not countable)}
+\label{sec:org705afeb}
+\begin{itemize}
+\item d\(_{\text{11}}\)d\(_{\text{12}}\)d\(_{\text{13}}\)\ldots{}d\(_{\text{1n}}\)
+d\(_{\text{21}}\)\ldots{}\ldots{}..d\(_{\text{2n}}\)
+\ldots{}\ldots{}\ldots{}..
+d\(_{\text{n1}}\)\ldots{}\ldots{}..d\(_{\text{nn}}\)
+\item Construct e such that e\(_{\text{ii}}\) = (d\(_{\text{ii}}\) + 2) \% 10
+\end{itemize}
+\subsection{Proof that Eq\(_{\text{BFA}}\) = <(DFA1, DFA2); <(DFA1)=<(DFA2)>}
+\label{sec:org09f4b57}
+\begin{itemize}
+\item 2\(\cdot\)L(DFA1) = L(DFA2) \(\Rightarrow\) (L(DF1) \intersect L(DFA2)) = \(\epsilon\)
+AND (L(DFA1) \intersect L(DFA2)) = \(\epsilon\)
+\item Checking if L(DFA) = \(\epsilon\) is Decidable
+\begin{itemize}
+\item Go through every state in the DFA
+\item If you go to any state that is acccepting with a string that is not empty, reject
+\begin{itemize}
+\item Otherwise accept.
+\end{itemize}
+\end{itemize}
+\item Full proof on pg 169 of tb
+\begin{itemize}
+\item Introduction to theroty of computation 2\(^{\text{nd}}\) edition By M. Sipser
+\end{itemize}
+\end{itemize}
+\section{Week 5}
+\label{sec:org07c6160}
+\subsection{Continuing..}
+\label{sec:org5982687}
+\begin{itemize}
+\item A\(_{\text{TM}}\) = \{M\#\(_{\text{W}}\) | M accepts w \}
+\begin{itemize}
+\item The membership/acceptance problem
+\item Thm: A\(_{\text{TM}}\) is a recognizable language
+\item Proof: Construct a new TM U
+\begin{itemize}
+\item U = "on input M\#\(_{\text{w}}\) where M is a TM and w is a string"
+\begin{enumerate}
+\item Simulate M running on w
+\item If M accepts, U accepts
+\item If M rejects, U rejects
+\end{enumerate}
+\end{itemize}
+\item Universal Turing Machine (UTM)
+\item Thm: M is undecideable
+\item Proof: Assume that A\(_{\text{TM}}\) is decideable
+\(\Rightarrow\) there exost a TM D
+D(M\#\(_{\text{w}}\)) = \{ accept if M accepts W, reject is M does not accept W \} 
+P = "on input M, where M is a TM:"
+\begin{enumerate}
+\item Run D on input M\#\(_{\text{M}}\)
+\item Output the opposite of D
+\begin{itemize}
+\item if D accepts, reject
+\item if D rejects, accept
+\end{itemize}
+\item P(M) = \{ accept if M does not accept M, reject if M does accept M \}
+\end{enumerate}
+\begin{itemize}
+\item What if we run P on itself?
+P(P) = \{ accept is P rejects, reject if P accepts \}
+  This is a paradox \(\Rightarrow\) Contradiction
+  \(\therefore\) A\(_{\text{TM}}\) is undecideable
+\end{itemize}
+\end{itemize}
+\item Def Lbar = \(\sum\)* - L
+\begin{itemize}
+\item Thm: A\(_{\text{TM}}\)Bar is unrecognizeable
+\item Proof: Will follow from 
+\begin{itemize}
+\item Thm: A is decidable iff A and ABar are recognizable
+\item Proof: 
+\begin{enumerate}
+\item Show A is decideable \(\Rightarrow\) A and ABar are recognizable
+\item Show A is decideable \(\Rightarrow\) A is recognizable
+\item \(\Leftarrow\) A is recognizable \(\Rightarrow\) \(\exists\) TM m such that \(\forall\)w, M accept (and halt) w iff w \(\in\) A
+\end{enumerate}
+\end{itemize}
+\begin{itemize}
+\item Let M\(_{\text{1}}\) and M\(_{\text{2}}\) recognize A and ABar respectively \(\Rightarrow\) A\(_{\text{W}}\) M\(_{\text{1}}\) halts if w\(\in\)A, M\(_{\text{2}}\) halt is w\(\notin\)A
+\item M = "Run M\(_{\text{1}}\) and M\(_{\text{2}}\) in parallel"
+\begin{enumerate}
+\item If M\(_{\text{1}}\) accepts, accept
+\item If M\(_{\text{2}}\) accepts, reject
+\end{enumerate}
+\item M is a decider for A \(\Rightarrow\) A is decideable
+\end{itemize}
+\item Thm (again): A\(_{\text{TM}}\)Bar is unrecognizeable
+\begin{itemize}
+\item if A\(_{\text{TM}}\)Bar was recognizable \(\Rightarrow\) A\(_{\text{TM}}\) is decidable, which it isn't
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Halting Problem}
+\label{sec:org2b04cb3}
+\subsubsection{Turings Method}
+\label{sec:orge0fbaca}
+\begin{itemize}
+\item HP = \{ M\#\(_{\text{W}}\) | M halts, on W \}
+\item Thm: The halting problem is undecideable
+\item Proof: 
+\begin{enumerate}
+\item \(\sum\)* is countable
+\item The set of all TMs is countable
+\item Construct a TM P:
+P(w) = "on input w, construct M\(_{\text{w}}\) and we run D on M\(_{\text{w\#w}}\)
+\begin{enumerate}
+\item If D rejects, accept
+\item if D accepts, loop
+\end{enumerate}
+\item Assume HP is decideable
+\begin{itemize}
+\item D(m\#\(_{\text{W}}\)) = \{ accept if M halts on w, reject if M loops on w \}
+\item P is not in my table, \(\therefore\) contraduction.
+\end{itemize}
+\end{enumerate}
+\end{itemize}
+\subsubsection{Method 2}
+\label{sec:orgefb8c32}
+\begin{itemize}
+\item Assume HP is decideable
+\begin{itemize}
+\item Then \(\exists\) a decider for HP
+\end{itemize}
+D\(_{\text{1}}\)(M\#\(_{\text{w}}\)) = \{ "accept if M halts on w, reject if M loops on w" \}
+D\(_{\text{2}}\) = "on input M\#\(_{\text{w}}\), M is a TM, w is a string"
+\begin{enumerate}
+\item Run D\(_{\text{1}}\) on input M\#\(_{\text{w}}\)
+\item If D\(_{\text{1}}\) rejects, reject
+\item If D\(_{\text{1}}\) accepts, simulate M on w
+3.1) If M accepts, accept
+3.2) If M rejects, reject
+\end{enumerate}
+D\(_{\text{2}}\)(M\#\(_{\text{w}}\)) = \{ "if M loops on w reject, if M rejects w reject, if M accepts w accept" \}
+D\(_{\text{2}}\) decides A\(_{\text{TM}}\)
+A\(_{\text{TM}}\) = \{ M\#\(_{\text{w}}\) | M accepts w \}
+Contradiction, \(\therefore\) HP is undecideable
+\end{itemize}
+\section{Week 6}
+\label{sec:org5aedea6}
+\begin{itemize}
+\item Sick
+\end{itemize}
+\section{Week 7}
+\label{sec:org55a1c79}
+\begin{itemize}
+\item Last Time
+\begin{itemize}
+\item A \(\le_{\text{m}}\) B
+\item ES and REG are both undecideable
+\end{itemize}
+\item Given a TM M
+\begin{enumerate}
+\item Accepts any string
+\item Accepts the string OOOO
+\item Accepts every string
+\item Accepts a finite set
+\item Accepts a CFL
+\item Has 100 or more states
+\item Has more then 100 steps on input w
+\item 1 through 5 are undecideable
+\begin{itemize}
+\item About the language of the TM (L(M))
+\end{itemize}
+\item 6 through 7 are decideable
+\begin{itemize}
+\item About the TM (M)
+\end{itemize}
+\end{enumerate}
+\end{itemize}
+\subsection{Anything about the language is undecideable}
+\label{sec:orge5f70ee}
+\begin{itemize}
+\item Let S denote the set of all languages
+\item Let a property P be a subset of S
+\item A TM M has the property P if L(M)\(\in\)P
+\item Property
+\begin{itemize}
+\item A TM accepts no strings \(\Rightarrow\) P\(_{\text{empty}}\) = \{ \(\empty\) \}
+\item A property is non trivial if \(\exists\) M\(_{\text{1}}\) and M\(_{\text{2}}\) such that L(M\(_{\text{1}}\)) \(\in\) P and L(M\(_{\text{2}}\)) \(\notin\) P
+\item P\(_{\text{trivial}}\) = \{ L | L is recognizable \}
+\end{itemize}
+\item Rice's Thm:
+\begin{itemize}
+\item Let P be a non-trivial property of languages of Turing Machines
+\begin{itemize}
+\item L\(_{\text{p}}\) = \{ M | L(M) \(\in\) P \} is undecideable
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Midterm}
+\label{sec:org62cf339}
+\begin{itemize}
+\item Thursday March 1\(^{\text{st}}\), 6:00-8:00pm
+\item IB120
+\item 5 Questions
+\item Topics
+\begin{itemize}
+\item PDAs
+\item Low Level TMs
+\begin{itemize}
+\item Define a TM, states, transitions, alphabet, etc
+\end{itemize}
+\item Models of Equivalence
+\begin{itemize}
+\item Ignore enumerators
+\end{itemize}
+\item Decideability and Recognizeability
+\item A\(_{\text{TM}}\)/Halting Problems proofs
+\begin{itemize}
+\item Don't memorize the proof in full
+\item Know the idea, fill in the blanks/find the error
+\end{itemize}
+\item Reductions
+\begin{itemize}
+\item Definitions
+\item Proofs 
+\begin{itemize}
+\item Show that language L is decideable/recognizeable using a reduction
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Define L is recognizable
+\(\exists\) a TM M such that \(\forall\)w if w\(\in\)L then M accepts w and if w\(\notin\)L M loops or rejects w
+\item HP = \{ M\(_{\text{\#w}}\) | M halts on w \}
+\begin{itemize}
+\item R(M\(_{\text{\#w}}\)) = run M on w, if M accepts \(\rightarrow\) accept. If M rejects \(\rightarrow\) accept. If M loops \(\rightarrow\) loop
+\item M\(_{\text{\#w}}\) \(\in\) HP iff M doesn't loop on w
+\end{itemize}
+\item A is recognizable \textlnot{}\(\rightarrow\) A' is unrecognizeable
+\item A is undecideable and A is recognizable \(\rightarrow\) A' is unrecognizeable
+\end{itemize}
+\subsubsection{Past test, quesiton 7}
+\label{sec:org3990c38}
+\begin{itemize}
+\item L'' = \{ M : L(M) = L\(_{\text{L}}\) \}
+\item L\(_{\text{L}}\) = \{ O\(^{\text{n}}\)l\(^{\text{m}}\) | n < m \}
+\begin{itemize}
+\item Oll \(\in\) L\(_{\text{L}}\)
+\item O \(\notin\) L\(_{\text{L}}\)
+\item \(\epsilon\) \(\notin\) L\(_{\text{L}}\)
+\item lO \(\notin\) L\(_{\text{L}}\)
+\end{itemize}
+\item is L'' decideable, recognizable?
+\item is L''' decidable, recognizable?
+\item HP, A\(_{\text{TM}}\), HP', A\(_{\text{TM}}\)'
+\item HP' \(\le\) mL
+\item Show L'' is undecideable
+\begin{itemize}
+\item HP \(\le_{\text{m}}\) L''
+\item f(M\(_{\text{\#w}}\))\(\in\)L'' \(\Leftarrow \Rightarrow\) M\(_{\text{\#W}}\) \(\in\) HP
+\item f(M\(_{\text{\#W}}\)) = on input x, set x aside
+\begin{itemize}
+\item Run M on W
+\item run a L\(_{\text{L}}\)\(_\)\(_\) recognizer on x
+\begin{itemize}
+\item if it accepts \(\rightarrow\) accept
+\item if it rejcts \(\rightarrow\) reject
+\end{itemize}
+\end{itemize}
+\item L(f(M\(_{\text{\#W}}\))) = \{ L\(_{\text{L}}\) if M halts on w, \(\empty\) if M loops on W \}
+\item f(M\(_{\text{\#W}}\)) \(\in\) L'' \(\Leftarrow \Rightarrow\) L(f(M\(_{\text{\#W}}\))) = L\(_{\text{L}}\) \(\Leftarrow \Rightarrow\) M halts on W \(\Leftarrow \Rightarrow\) M\(_{\text{\#W}}\) \(\in\) HP
+\item \(\therefore\) L''in undecideable
+\end{itemize}
+\item if A \(\le_{\text{m}}\) B then A' \(\le_{\text{m}}\) B'
+\begin{itemize}
+\item HP' \(\le_{\text{m}}\) L'''
+\item \(\therefore\) L''' is unrecognizeable
+\end{itemize}
+\end{itemize}
+\section{Week 8}
+\label{sec:org7dac399}
+\begin{itemize}
+\item What can (or can't) camputers do (effectivness)
+\item So something using (relatively) little resources
+\begin{itemize}
+\item Time and space
+\end{itemize}
+\end{itemize}
+\subsection{Moving Forward}
+\label{sec:orgb49512e}
+\begin{itemize}
+\item Look at low level TM
+\item Compare Models
+\item Classify problems / Heirachy - Reductions
+\end{itemize}
+\subsection{The Lecture}
+\label{sec:org49f8ac3}
+\begin{itemize}
+\item Def
+Let M be a total deterministic TM, the time complexity of M is a function f:N \(\rightarrow\) N, f(n) is the max number of steps M
+uses on any input of length n
+\begin{itemize}
+\item M is a f(n) TM
+\item M runs in f(n) time
+\item Def
+f, g N\(\rightarrow\)R\(^{\text{T}}\), f(n) = O(g(n)) if \(\exists\)n\(_{\text{0}}\), c \(\forall\) n>n\(_{\text{0}}\): f(n) < cg(n)
+\end{itemize}
+\item Def
+f, g: N\(\rightarrow\)R* f(n) = o(g(n)) if $$lim \frac{f(n)}{g(n)} = 0$$\\
+g grows \uline{faster} then f eventually
+\item Facts
+\begin{itemize}
+\item f(n) = O(f(n))
+\item f(n) \(\ne\) o(f(n))
+\item f(n) = O(g(n)) \textlnot{}\(\rightarrow\) f(n) = o(g(n))
+\item f(n) = o(g(n)) \(\rightarrow\) f(n) = O(g(n))
+\end{itemize}
+\item Consider the language L = \{0\(^{\text{n}}\)\(^\)\(^\)1\(^{\text{n}}\) | n\(\ge\)0 \}
+M\(_{\text{1}}\) = on input w
+\begin{enumerate}
+\item Scan from L to R
+\item Cross off first O encountered
+2,1) Then cross off the first 1 encountered
+\item When \box is reached, go back to the begining
+\item Repeat 2
+4,1) If anything is found out of place, reject
+4,2) If no 0 or 1 before \box, accept
+\end{enumerate}
+\item M is a f(n) = o(nlog(n)), then L(M), is regular 
+\begin{itemize}
+\item Def: t: N\(\rightarrow\)R\(^{\text{t}}\), the time class TIME(t(n)) is the set of all languages that are decidable by a O(t(n)) TM.
+\begin{itemize}
+\item is L \(\in\) TIME(N\(^{\text{3}}\))?
+\item is L \(\in\) TIME(N)?
+\item is L \(\in\) TIME(nlog(n))
+\end{itemize}
+\item Thm
+Let t(n) be a function where t(n)\(\ge\)n. Then every t(n) time multitape TM has an equivalent O(t\(^{\text{2}}\)(n)) single tape TM
+\begin{itemize}
+\item How long can the single tape be at any moment in time? Assume t(n)\(\ge\)n
+\begin{itemize}
+\item Each multitape can be at most t(n) long
+\item The single table can be at \(\le\) k*t(n) + k - 1 (Account for the boundry characters) = O(t(n))
+\item In the worst case for a single "step" take
+\[ O(t(n)) + k shifts \]
+\[ O(t(n)) + k*O(t(n)) \]
+\[ O(t(n)) \]
+\item Number of steps to simulate = t(n)
+\item \(\therefore\) Total simulation time t(n)*O(t(n)) = O(t\(^{\text{2}}\)(n))
+\item Let N be a total NTM, its running time f(n) is the running time of itslongest branch
+\item Thm
+Let t(n)\(\ge\)n, then every t(n) NTM has an equivalent 2\(^{\text{O(t(n))}}\) time deterministic TM
+\item Def
+P is the class of languages that are decideable in polynomial time on a deterministic single-tape TM. 
+\[ P = U^{inf}_{k = 0} TIME(n^k) \]
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\section{Week 9}
+\label{sec:orgf59edb8}
+\begin{itemize}
+\item All deterministic computational models are polynomial equivalent
+\begin{itemize}
+\item If you can code a program which runs in polynomial time, a single table TM exists, which does the same thing
+\end{itemize}
+\end{itemize}
+\subsection{Example}
+\label{sec:orgf5a6317}
+PATH = \{ <G, s, t> | There's a path from s to t in G \}
+\begin{itemize}
+\item Theorem
+PATH \(\in\) P 
+\begin{itemize}
+\item Proof
+A poly time alporithm M operates as follows
+M(G, s, t) = 
+\begin{itemize}
+\item "Mark" s
+\item While at least one more node has been marked since last iteration
+\begin{itemize}
+\item For each edge (a, b) if a is marked and b is not, mark b
+\end{itemize}
+\begin{itemize}
+\item If t is marked \(\rightarrow\) accept, else reject
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Example}
+\label{sec:orgdc6ccdb}
+HPATH = \{ <G, s, t> | there's a Hamiltonian path from s to t \}
+\begin{itemize}
+\item Def
+A Hamiltonian path goes through every other node \uline{exactly} once
+\item Def
+A verifier for a language L is an algorithm V where:
+\begin{itemize}
+\item L = \{ w | V accepts <w, c> for some c \}
+\item c is called the certificate
+\item A poly time verified runs in polynomial time in the length of w
+\item A language L is polynomial time verifiable if it has a polynomial time verifier (This TM always halts)
+\end{itemize}
+\item Def One
+NP is the class of languages which have polynomial time verifiers
+\item Def Two
+A language is in NP iff it is decided by some polynomial time NTM
+\end{itemize}
+\subsection{Question}
+\label{sec:org853a3dc}
+If a language is in P, it is also in NP?
+\begin{itemize}
+\item Def One
+\begin{itemize}
+\item V(<w, c>) = run D\(_{\text{poly}}\) on w
+\item D\(_{\text{Poly}}\) = decider for L
+\end{itemize}
+\item Def Two
+\begin{itemize}
+\item \{ TM \} \subseteq \{NTM\}
+\end{itemize}
+\end{itemize}
+\subsection{Question}
+\label{sec:orgd2687e3}
+If a language is in NP, it is also in P?
+\begin{itemize}
+\item Well this is the P = NP problem. We know sometimes, not if it is always.
+\end{itemize}
+\subsection{Complexity Reductions}
+\label{sec:org1aad090}
+\begin{itemize}
+\item Def
+Language A is a polynomial time reduceable to language B, A \(\le_{\text{p}}\) B, if \(\exists\) a polynomial time computable function f, 
+where \(\forall\)w, w \(\in\) A \(\Leftarrow \Rightarrow\) f(w) \(\in\) B
+\begin{itemize}
+\item Typical use
+Given problem A, assume we have a black box which solces problem B. In polynomial time, make your instance of A
+look like an instrance of problem B. Run your B black box on that instance, return an answer appropriatly
+\end{itemize}
+\item Example
+LONG = \{ <G, s, t, d> | \(\exists\) a path from s to t in G, with at least distance of d \} 
+\begin{itemize}
+\item No cyles allowed, can't visit a node more then once
+\item Prove that HPATH \(\le_{\text{p}}\) LONG
+\begin{enumerate}
+\item Assume I have a black box which solved LONG
+\item To solve HPATH(G, s, t)
+\begin{enumerate}
+\item Set all edge weights to 1
+\item Call LongSol(G, s, t, |v| - 1)
+\begin{itemize}
+\item If yes \(\rightarrow\) yes, if no \(\rightarrow\) no
+\end{itemize}
+\end{enumerate}
+\end{enumerate}
+\end{itemize}
+\begin{itemize}
+\item Thm
+If A \(\le_{\text{P}}\) B, and A \(\in\) P, then A \(\in\) P
+\item Caollary
+If A \(\le_{\text{p}}\) B and A \(\notin\) P, then B \(\notin\) P
+\end{itemize}
+\end{itemize}
+\section{Week 10}
+\label{sec:orge06c4de}
+\subsection{From last time}
+\label{sec:org5e61a02}
+\begin{itemize}
+\item A \(\le_{\text{p}}\) B
+\begin{itemize}
+\item If we can solve B, then we can solve A
+\item Then B is at least as hard to solve as A is
+\end{itemize}
+\end{itemize}
+\subsection{Toolbox of problems}
+\label{sec:orga9c8542}
+\begin{itemize}
+\item Vertex Cover
+Given a graph G=(V, E), a Vertex Cover, C, is a set of verticies such that \(\forall\)(v\(_{\text{1}}\), v\(_{\text{2}}\))\(\in\) E, v\(_{\text{1}}\) \(\in\) C, v\(_{\text{2}}\) \(\in\) C\\
+VertexCover = \{(G, K) | G has a vertex cover of size k or less \}
+\item Independent-Set
+Given a graph G=(V, E), an independent set is a set of verticies I, such that \(\forall\)(v\(_{\text{1}}\), v\(_{\text{2}}\)) \(\in\) E, \textlnot{}(v\(_{\text{1}}\) \(\in\) I and v\(_{\text{2}}\) \(\in\) I)\\
+Independent-Set = \{(G, K) | G has an independent set of size K \}
+\begin{itemize}
+\item Prove: Independent Set \(\le_{\text{P}}\) Vertex Cover
+Let C be a vector cover of G=(V, E). Consider any two nodes v\(_{\text{1}}\) and v\(_{\text{2}}\) in V-C.\\
+What if v\(_{\text{1}}\), v\(_{\text{2}}\) \(\in\) V-C and (v\(_{\text{1}}\), v\(_{\text{2}}\))\(\in\) E \(\Rightarrow\) C is not a VC
+\begin{itemize}
+\item \(\therefore\) v\(_{\text{1}}\), v\(_{\text{2}}\) \(\in\) V-C we know (v\(_{\text{1}}\), v\(_{\text{2}}\))\(\notin\) E
+\item \(\therefore\) V-C is an independent set in G
+\item \(\therefore\) If there is a vertex cover of size |V| - k in G, then there's an independent set of size k in G
+\end{itemize}
+IS(G, K) = call VertexCoverSol(G, |V|-k)
+\begin{itemize}
+\item If accept \(\rightarrow\) accept (yes)
+\item If reject \(\rightarrow\) reject (no)
+\end{itemize}
+\end{itemize}
+\item Clique
+Given a graph G=(V, E), a cliquw of the graph is a set S such that S\subseteq{}V and \(\forall\) v\(_{\text{1}}\), v\(_{\text{2}}\) \(\in\) S, 
+(v\(_{\text{1}}\), v\(_{\text{2}}\)) \(\in\) E or v\(_{\text{1}}\) = v\(_{\text{2}}\).
+\end{itemize}
+\end{document}
